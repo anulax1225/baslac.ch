@@ -19,10 +19,10 @@
 * Affiché le programme au formats pdf.
 * Possibilité pour les parents de s'inscrire a une news letter
 * Afficher les informations du groupe
-* Les utilisateur peuvent faire des articles'
+* Les utilisateur peuvent faire des articles.
 * Les contenu des article peuvent est ecrire dans le meme style que se document.
 * Les utilisateur doivent recevoir un code pour pouvoir sign in, code qui peux etre produit par n'import quel utilisateur.
-
+* Le premiere utilisateur sera groupe@baslac.ch et sera controller par l'administrateur du site.
 # Donnée 
 obligatoire = *
 
