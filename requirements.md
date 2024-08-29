@@ -21,6 +21,7 @@
 * Afficher les informations du groupe
 * Les utilisateur peuvent faire des articles'
 * Les contenu des article peuvent est ecrire dans le meme style que se document.
+* Les utilisateur doivent recevoir un code pour pouvoir sign in, code qui peux etre produit par n'import quel utilisateur.
 
 # Donnée 
 obligatoire = *
@@ -31,8 +32,10 @@ obligatoire = *
 * Totem
 * Photo de profil
 * Email *
+* Numero de telephone
+* Contactable (Oui/Non)
 * Mot de passe
-* 
+
 
 ## Article
 * titre *
