@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+}
+
+@layer components {
+
+}
+
+@layer utilities {
+    .md-content {
+        font-family: "Roboto";
+    }
+    
+    .md-content h1 {
+        font-size: 45px;
+        font-weight: 700;
+        border-bottom: 1px solid rgb(133, 133, 133);
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+    
+    .md-content h2 {
+        font-size: 40px;
+        font-weight: 600;
+        border-bottom: 1px solid gray;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+    
+    .md-content h3 {
+        font-size: 30px;
+        font-weight: 500;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+    
+    .md-content h4 {
+        font-size: 25px;
+        font-weight: 500;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+    
+    .md-content h5 {
+        font-size: 20px;
+        font-weight: 500;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+
+    .md-content h6 {
+        font-size: 15px;
+        margin-top: 5px;
+        padding-left: 10px;
+    }
+
+    .md-content p {
+        margin-top: 5px;
+    }
+
+    .md-content blockquote {
+        border-left: 10px solid rgb(107, 107, 107);
+        background-color: rgb(224, 224, 224);
+        padding: 20px;
+        margin-top: 10px;
+    }
+    
+    .md-content ul {
+        padding-left: 30px;
+        padding-right: 30px;
+        list-style: circle;
+        margin-top: 5px;
+    }
+    
+    .md-content code {
+        width: 100%;
+        display: flex;
+        background-color: rgba(128, 128, 128, 0.13);
+        border-radius: 7px;
+        padding: 5px 10px 5px 10px;
+        margin-top: 15px;
+    }
+    
+    .bg-radial {
+        background: radial-gradient(hsla(0, 0%, 5%, 0.568), hsla(0, 0%, 25%, 0));
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+   /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-y-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    .social-icon-in {
+        animation: 0.2s social-icon-in-anim ease-out forwards;
+    }
+
+    .social-icon-out {
+        animation: 0.2s social-icon-out-anim ease-in forwards;
+    }
+
+    @keyframes social-icon-in-anim {
+        from {
+            background-color: inherit;
+            transform: scale(1);
+        }
+        to {
+            background-color: #681536;
+            transform: scale(0.9);
+        }
+    }
+
+    @keyframes social-icon-out-anim {
+        from {
+            background-color: #681536;
+            transform: scale(0.9);
+        }
+        to {
+            background-color: inherit;
+            transform: scale(1);
+        }
+    }
+
+    .icon-in {
+        animation: 0.2s icon-in-anim ease-out forwards;
+    }
+
+    .icon-out {
+        animation: 0.2s icon-out-anim ease-in forwards;
+    }
+
+    @keyframes icon-in-anim {
+        from {
+            filter: invert(0);
+        }
+        to {
+            filter: invert(1);
+        }
+    }
+
+    @keyframes icon-out-anim {
+        from {
+            filter: invert(1);
+        }
+        to {
+            filter: invert(0);
+        }
+    }
+}

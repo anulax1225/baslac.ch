@@ -1,45 +1,39 @@
 <?php
 
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ImageController;
-use App\Http\Controllers\InfoController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
+use Inertia\Inertia;
 
-Route::get('/', function () { return view('home'); });
+Route::get('/', function () {
+    return Inertia::render('Home', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+})->name('home');
 
-Route::get("/albums", [AlbumController::class, "index"]);
-Route::get("/albums/{id}", [AlbumController::class, "show"]);
-Route::post("/albums", [AlbumController::class, "store"]);
-Route::put("/albums/{id}", [AlbumController::class, "update"]);
-Route::delete("/albums/{id}", [AlbumController::class, "destroy"]);
+Route::get('/info', function () {
+    return Inertia::render('Info');
+})->name('info');
 
-Route::get("/article", [ArticleController::class, "index"]);
-Route::get("/article/{id}", [ArticleController::class, "show"]);
-Route::post("/article", [ArticleController::class, "store"]);
-Route::put("/article/{id}", [ArticleController::class, "update"]);
-Route::delete("/article/{id}", [ArticleController::class, "destroy"]);
+Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
+Route::get('/photo/{id}', [ProfileController::class, 'show'])->name('photo.show');
+Route::post('/photo/{id}/edit', [ProfileController::class, 'store'])->name('photo.edit');
+Route::post('/photo/{id}', [ProfileController::class, 'store'])->name('photo.store');
+Route::patch('/photo/{id}', [ProfileController::class, 'update'])->name('photo.update');
+Route::delete('/photo/{id}', [ProfileController::class, 'destroy'])->name('photo.destroy');
 
-Route::get("/categories", [CategorieController::class, "index"]);
-Route::get("/categories/{id}", [CategorieController::class, "show"]);
-Route::post("/categories", [CategorieController::class, "store"]);
-Route::put("/categories/{id}", [CategorieController::class, "update"]);
-Route::delete("/categories/{id}", [CategorieController::class, "destroy"]);
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get("/users", [UserController::class, "index"]);
-Route::get("/users/{id}", [UserController::class, "show"]);
-Route::post("/users", [UserController::class, "store"]);
-Route::put("/users/{id}", [UserController::class, "update"]);
-Route::delete("/users/{id}", [UserController::class, "destroy"]);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
-Route::get("/infos", [InfoController::class, "index"]);
-Route::get("/infos/{id}", [InfoController::class, "show"]);
-Route::post("/infos", [InfoController::class, "store"]);
-Route::put("/infos/{id}", [InfoController::class, "update"]);
-Route::delete("/infos/{id}", [InfoController::class, "destroy"]);
-
-Route::post("/images", [ImageController::class, "store"]);
-Route::delete("/images/{id}", [ImageController::class, "destroy"]);
+require __DIR__.'/auth.php';

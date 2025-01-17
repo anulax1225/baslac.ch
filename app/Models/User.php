@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
     /**
@@ -18,13 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        "lastname",
         'email',
-        "phone",
-        "totem",
-        "contactable",
         'password',
-        "image_id"
+        'email_verified_at'
     ];
 
     /**
@@ -48,15 +45,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-    public function infos()
-    {
-        return $this->hasMany(Info::class);
-    }
-
-    public function articles()
-    {
-        return $this->hasMany(Article::class);
     }
 }
