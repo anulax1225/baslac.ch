@@ -18,6 +18,7 @@
         @inertiaHead
     </head>
     <body class="font-roboto antialiased w-screen h-screen">
+        @csrf
         @inertia
     </body>
 </html>

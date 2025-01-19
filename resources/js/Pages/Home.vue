@@ -8,9 +8,9 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
     <Head title="Home"/>
     <GuestLayout>
         <template #content>
-            <div class="relative w-full h-80 flex items-center overflow-hidden">
-                <img src="/img/chalet.webp">
-                <p class="text-center absolute text-white/90 text-[180px] font-bold left-0 right-0">Scout Baslac</p>
+            <div class="relative w-full h-96 flex items-center overflow-hidden">
+                <img src="/img/sarasin.png" class="w-full pb-96">
+                <p class="text-center absolute text-white/65 text-[180px] leading-[180px] font-bold left-0 right-0">Scout Baslac</p>
             </div>
             <div class="w-full px-[17.5%] flex flex-col">
                 <div class="my-5">
@@ -26,14 +26,18 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
                         mais aussi à faire des bricolages, constructions et autres projets en fonction de leur âge.
                     </p>
                     <p class="mb-1">Plein d’autres activités sont également au programme :</p>
-                    <ul class="list-disc px-6 mb-2">
-                        <li>Jeux de rôle</li>
-                        <li>Marches</li>
-                        <li>Bricolage</li>
-                        <li>Théâtre</li>
-                        <li>Chant</li>
-                        <li>Etc.</li>
-                    </ul>
+                    <div class="w-72 grid grid-cols-2 mb-2 mx-auto">
+                        <ul class="list-disc">
+                            <li>Jeux de rôle</li>
+                            <li>Marches</li>
+                            <li>Bricolage</li>
+                        </ul>
+                        <ul class="list-disc">
+                            <li>Théâtre</li>
+                            <li>Chant</li>
+                            <li>Etc.</li>
+                        </ul>
+                    </div>
                     <p> 
                         Tout ce qui va permette à chacun de se développer, de se connaître. 
                         Et tous les anciens vous le dirons, la solidarité est telle que les groupes de scout vous donnent surtout les meilleurs amis pour la vie.
