@@ -54,7 +54,7 @@ const submit = () => {
         </div>
         <div class="px-10 pb-5 pt-5">
             <div @click="() => emits('close')" class="w-full flex justify-end ">
-                <img src="/icons/cancel.svg" class="h-5"> 
+                <img src="/icons/cancel.svg" class="h-7 hover:bg-black/10 rounded-md p-1"> 
             </div>
             <form @submit.prevent="submit">
                 <p>Fichier image</p>

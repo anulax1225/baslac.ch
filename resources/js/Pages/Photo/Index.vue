@@ -55,7 +55,7 @@ const gridState = reactive({ columns: 3 });
                 </div>
                 <div class="relative flex items-center">
                     
-                    <button @click="create.active = !create.active" class="flex items-center">
+                    <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
                         <p class="font-semibold mr-4">Ajouter une photo</p>
                         <img src="/icons/add.svg" class="h-8">
                     </button>
