@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Album;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,15 +10,27 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Illuminate\Support\Str;
 
-class PhotoController extends Controller
+class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('Photo/Index', [
-            "photos" => Photo::orderBy("created_at", "DESC")->get()->jsonSerialize(),
+        return Inertia::render('Album/Index', [
+            "albums" => Album::orderBy("created_at", "DESC")->get()->jsonSerialize(),
+        ]);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $album = Album::where("uuid", $id)->first();
+        return Inertia::render('Album/Show', [
+            "album" => $album->jsonSerialize(),
+            "photos" => $album->photos->jsonSerialize()
         ]);
     }
 
@@ -26,7 +39,7 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Photo/Create');
+        //
     }
 
     /**
@@ -43,20 +56,15 @@ class PhotoController extends Controller
             return redirect()->back()->withErrors(["path" => "Probleme with the file transfert"]);
 
         $uuid = Str::uuid();
-        $path = "photos/" . $uuid . "-" . $request->name . "." . pathinfo($request->path, PATHINFO_EXTENSION);
+        $path = "albums/" . $uuid . "-" . $request->name . "." . pathinfo($request->path, PATHINFO_EXTENSION);
         Storage::disk("s3")->move($request->path, $path);
-        $photo = Photo::create([
+        Album::create([
             "uuid" => $uuid,
             "name" => $request->name,
             "path" => $path,
             "user_id" => Auth::user()->id
         ]);
-        if($request->redirect) {
-            return redirect()->back();
-        }
-        return response()->json([
-            "uuid" => $photo->uuid
-        ]);
+        return redirect(route("album.index"))->with(["message" => "Photo ajouté avec success"]);
     }
 
     /**
@@ -64,15 +72,17 @@ class PhotoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            "name" => "required|string|max:255",
-        ]);
-        $photo = Photo::where("uuid", $request->id)->first();
+        //
+    }
+
+    public function addPhoto(Request $request)
+    {
+        $album = Album::where("uuid", $request->id)->first();
+        $photo = Photo::where("uuid", $request->uuid)->first();
         if(!$photo) redirect()->back()->withErrors(["uuid" => "Photo introuvable" ]);
-        $photo->update([
-            "name" => $request->name
-        ]);
-        return redirect(route("photo.index"))->with(["message" => "Nom de la photo modifié avec success"]);
+        if(!$album) redirect()->back()->withErrors(["uuid" => "Album introuvable" ]);
+        $album->photos()->attach($photo);
+        return redirect()->back();
     }
 
     /**
@@ -80,10 +90,6 @@ class PhotoController extends Controller
      */
     public function destroy(string $id)
     {
-        $photo = Photo::where("uuid", $id)->first();
-        if(!$photo) redirect()->back()->withErrors(["uuid" => "Photo introuvable" ]);
-        $photo->albums()->detach();
-        $photo->delete();
-        return redirect(route("photo.index"))->with(["message" => "Photo supprimée avec success"]);
+        //
     }
 }

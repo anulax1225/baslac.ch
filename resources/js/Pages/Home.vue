@@ -1,12 +1,12 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import Layout from '@/Layouts/Layout.vue';
 
 </script>
 
 <template>
     <Head title="Home"/>
-    <GuestLayout>
+    <Layout>
         <template #content>
             <div class="relative w-full h-96 flex items-center overflow-hidden">
                 <img src="/img/sarasin.png" class="w-full pb-96">
@@ -133,5 +133,5 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
                 </div>
             </div>
         </template>
-    </GuestLayout>
+    </Layout>
 </template>

@@ -1,9 +1,12 @@
 <script setup>
+import Dropzone from '@/Components/Dropzone.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Utils from '@/utils';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { reactive } from 'vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -14,58 +17,118 @@ defineProps({
     },
 });
 
-const user = usePage().props.auth.user;
+const picReset = () => {
+    form.path = user.path;
+}
+
+const user = usePage().props.user;
 
 const form = useForm({
     name: user.name,
     email: user.email,
+    totem: user.totem,
+    tel: user.tel,
+    contactable: user.contactable ? true : false,
+    path: user.path,
 });
+
+const pic = reactive({ active: false, edit: false });
+
+const submit = () => {
+    form.patch(route('profile.update'), { 
+        onSuccess: () => { 
+            window.location.reload() 
+        } 
+    });
+}
 </script>
 
 <template>
-    <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">
-                Profile Information
-            </h2>
-
-            <p class="mt-1 text-sm text-gray-600">
-                Update your account's profile information and email address.
-            </p>
+    <section class="">
+        <header :class="{'items-center' : !pic.edit}" class="flex justify-between">
+            <div>
+                <h2 class="text-xl font-medium text-gray-900">
+                    Information Profile 
+                </h2>
+                <p class="mt-1 text-sm text-gray-600">
+                    Mettre a jour votre profile de compte ici.
+                </p>
+            </div>
+            <div v-if="!pic.edit" @click="pic.active = !pic.active" class="relative">
+                <div class="w-32 overflow-hidden flex justify-center rounded-full bg-black/80">
+                    <img :src="user.pic" class="h-32">
+                </div>
+                <div @click="(e) => { Utils.Prevent(e); pic.edit = true; }" :class="{ 'hidden': !pic.active }" 
+                class="absolute top-full right-0 w-40 mt-1 bg-gray-100 text-sm text-black/80 rounded-md shadow-lg overflow-hidden">
+                    <p class="px-3 py-2 hover:bg-gray-50 hover:scale-[1.01]">Changer la photo</p>
+                    <p class="px-3 py-2 hover:bg-gray-50 hover:scale-[1.01]" >Retirer la photo</p>
+                </div>
+            </div>
+            <div v-else class="flex">
+                <img @click="(e) => { Utils.Prevent(e); pic.edit = false; pic.active = false; picReset(); }" src="/icons/cancel.svg" class="h-6 mr-2">
+                <Dropzone 
+                @file-added="(file) => form.path = file.key"
+                @file-removed="picReset" 
+                :name="'pic'"
+                :empty="'Téléversé une photo de profile'"
+                :multiple="false"
+                :accept="'image/*'"
+                />
+            </div>
         </header>
 
-        <form
-            @submit.prevent="form.patch(route('profile.update'))"
-            class="mt-6 space-y-6"
-        >
+        <form @submit.prevent="submit"
+        class="mt-6 space-y-6">
             <div>
-                <InputLabel for="name" value="Name" />
-
+                <InputLabel for="name" value="Email" />
+                <InputLabel class="mt-0.5" for="name" :value="user.email" />
+            </div>
+            <div>
+                <InputLabel for="name" value="Nom *" />
                 <TextInput
                     id="name"
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.name"
+                    placeholder="Entrer voter nom et prénom"
                     required
                     autofocus
-                    autocomplete="name"
                 />
-
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
-
             <div>
-                <InputLabel for="email" value="Email" />
-
+                <InputLabel for="totem" value="Totem" />
                 <TextInput
-                    id="email"
-                    type="email"
+                    id="totem"
+                    type="text"
                     class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="username"
+                    v-model="form.totem"
+                    placeholder="Entrer voter totem"
                 />
-
+                <InputError class="mt-2" :message="form.errors.name" />
+            </div>
+            <div>
+                <InputLabel for="tel" value="Tel. (ex : 079 666 69 69)" />
+                <TextInput
+                    id="tel"
+                    type="tel"
+                    pattern="[0-9]{3} [0-9]{3} [0-9]{2} [0-9]{2}"
+                    class="mt-1 block w-full"
+                    v-model="form.tel"
+                />
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+            <div>
+                <div class="flex items-center">
+                    <InputLabel class="mr-5" for="tel" value="Contactable" />
+                    <input
+                        name="contactable"
+                        type="checkbox"
+                        class="block border border-gray-300 rounded focus:ring-0"
+                        v-model="form.contactable"
+                        />
+                </div>
+                
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 

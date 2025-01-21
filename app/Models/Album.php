@@ -3,10 +3,9 @@
 namespace App\Models;
 
 use App\Utils\S3;
-
 use Illuminate\Database\Eloquent\Model;
 
-class Photo extends Model
+class Album extends Model
 {
     protected $fillable = [
         'name',
@@ -19,8 +18,9 @@ class Photo extends Model
     {
         return [
             'uuid' => $this->uuid,
-            'name' => $this->name, 
-            'path' => S3::signUrl($this->path),
+            'name' => $this->name,
+            'path' => $this->path, 
+            'image' => S3::signUrl($this->path),
             'user' => $this->user,
             'created_at' => date("d.m.Y", strtotime($this->created_at)),
         ];
@@ -31,9 +31,13 @@ class Photo extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function albums()
+    public function photos()
     {
-        return $this->belongsToMany(Album::class);
+        return $this->belongsToMany(Photo::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

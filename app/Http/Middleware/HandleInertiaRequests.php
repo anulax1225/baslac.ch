@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -31,6 +32,7 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            'user' => $request->user() ? User::find($request->user()->id)->jsonSerialize() : null,
             'auth' => [
                 'user' => $request->user(),
             ],

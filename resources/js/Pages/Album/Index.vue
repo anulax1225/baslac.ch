@@ -1,45 +1,33 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Layout from '@/Layouts/Layout.vue';
-import Dropzone from '@/Components/Dropzone.vue';
 import Create from './Partials/Create.vue';
 import Show from'./Partials/Show.vue';
-import Modal from './Partials/Modal.vue';
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
 const props = defineProps({
-    photos: {
+    albums: {
         type: Array,
         default: []
     },
-});   
+});
+
 const create = reactive({ active: false });
-
-const fullScreenState = reactive({ photo: {}, active: false });
 const viewState = reactive({ square: true, list: false });
-
-const fullScreen = (photo) => {
-    fullScreenState.photo = photo;
-    fullScreenState.active = true;
-    viewState.square = false; 
-    viewState.list = false;
-}
-
-const gridState = reactive({ columns: 3 });
 
 const squareView = () => {
     gridState.columns = 3; 
-    fullScreenState.active = false;
     viewState.square = true; 
     viewState.list = false;
 }
 
 const listView = () => {
     gridState.columns = 1; 
-    fullScreenState.active = false;
     viewState.square = false; 
     viewState.list = true;
 }
+
+const gridState = reactive({ columns: 3 });
 </script>
 
 <template>
@@ -54,20 +42,16 @@ const listView = () => {
                         hover:bg-black/5">
                             <img src="/icons/block-content.svg" class="h-7">
                         </button>
-                        <button @click="listView" :class="{'bg-black/5': viewState.list}" class="flex items-center h-full border-r border-gray-400 p-1
+                        <button @click="listView" :class="{'bg-black/5': viewState.list}" class="flex items-center h-full p-1
                         hover:bg-black/5">
                             <img src="/icons/list.svg" class="h-7">
-                        </button>
-                        <button @click="() => fullScreen(props.photos[0].uuid)" :class="{'bg-black/5': fullScreenState.active}" class="flex items-center p-1
-                            hover:bg-black/5">
-                            <img src="/icons/slider.svg" class="h-7">
                         </button>
                     </div>
                 </div>
                 <div class="relative flex items-center">
                     
                     <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
-                        <p class="font-medium mr-4">Ajouter une photo</p>
+                        <p class="font-medium mr-4">Ajouter un album</p>
                         <img src="/icons/add.svg" class="h-8">
                     </button>
                     <Create @close="create.active = !create.active" v-if="create.active" class="absolute -right-0 top-[110%] z-10 mt-4" />
@@ -75,18 +59,14 @@ const listView = () => {
             </div>
         </template>
         <template #content>
-            <div class="w-full px-[17.5%] h-full">
-                <div class="w-full h-full pb-20 bg-black/5">
-                    <div v-if="!fullScreenState.active" :class="{'grid-cols-3':  gridState.columns === 3}" 
+            <div class="w-full px-[17.5%] h-full min-h-screen">
+                <div class="w-full h-full pb-5 px-1 bg-black/5">
+                    <div :class="{'grid-cols-3':  gridState.columns === 3}" 
                     class="w-full grid pt-10">
-                        <Show v-for="(photo, index) in props.photos" 
-                        :photo="photo" :index="index" :length="props.photos.length" :columns="gridState.columns"
-                        @full-screen="fullScreen"
+                        <Show v-for="(album, index) in props.albums" 
+                        :album="album" :index="index" :length="props.albums.length" :columns="gridState.columns"
                         />
                     </div>
-                    <Modal v-if="fullScreenState.active" :photoId="fullScreenState.photo" :photos="props.photos"
-    @close="() => { fullScreenState.photo = {}; fullScreenState.active = false; }"
-    />
                 </div>
                 
             </div>

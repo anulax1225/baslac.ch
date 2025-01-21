@@ -5,14 +5,7 @@ import Layout from '@/Layouts/Layout.vue';
 import Dropzone from '@/Components/Dropzone.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
-import { nextTick, onMounted, reactive, ref } from 'vue';
-
-const props = defineProps({
-    redirect: {
-        type: Boolean,
-        default: true,
-    }
-});
+import { onMounted, reactive, ref } from 'vue';
 
 const dropzone = ref(null);
 
@@ -22,11 +15,10 @@ const imageState = reactive({
 
 const form = useForm({
     name: "",
-    path: "",
-    redirect: props.redirect, 
+    path: "", 
 })
 
-const emits = defineEmits(["close", "data"]);
+const emits = defineEmits(["close"]);
 
 const imageAdded = (file) => {
     form.path = file.key;
@@ -38,24 +30,13 @@ const imageRemoved = (file) => {
     form.path = "";
 } 
 
-const submit = async () => {
-    if(!props.redirect) {
-        let res = await axios.post("/photo", {
-            name: form.name,
-            path: form.path,
-            redirect: false, 
-        })
-        const uuid = res.data.uuid;
-        console.log(uuid, res);
-        emits("data", uuid);
-    } else {
-        form.post("/photo", {
+const submit = () => {
+    form.post("/album", {
         headers: {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector('input[name=_token]').value,
         },
     });
-    }
 
     imageState.url = "";
     form.path = "";
@@ -76,7 +57,7 @@ const submit = async () => {
                 <img src="/icons/cancel.svg" class="h-7 hover:bg-black/10 rounded-md p-1"> 
             </div>
             <form @submit.prevent="submit">
-                <p>Photo</p>
+                <p>Couverture de l'album</p>
                 <Dropzone
                 ref="dropzone"
                 @file-added="imageAdded"
@@ -89,7 +70,7 @@ const submit = async () => {
                 />
                 <InputError :message="form.errors.path"/>
                 <p class="mt-3">Nom</p>
-                <TextInput :class="'mb-1 w-full'" v-model="form.name" required :placeholder="'Nom de la photo'"/>
+                <TextInput :class="'mb-1 w-full'" v-model="form.name" required :placeholder="'Nom de l\'album'"/>
                 <InputError :message="form.errors.name"/>
                 <div class="w-full flex justify-end mt-3">
                     <button type="submit" class="text-white font-semibold p-1 px-2 bg-primary rounded-md">Ajouter</button>

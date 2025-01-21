@@ -1,7 +1,8 @@
 <template>
     <div @click="openDialog" :id="'dz-' + props.name" @drop="dropFiles" @dragover="Utils.Prevent" @drag="Utils.Prevent" @dragenter="popupShow" @dragleave="popupClose"
     :class="{ 'border-dashed': !props.disabled }"
-    class="w-full relative bg-gray-200 dark:bg-gray-900 border-2 border-gray-400 overflow-hidden p-4 flex flex-col items-center rounded-lg text-lg text-gray-900 dark:text-gray-200">
+    class="w-full relative border-2 bg-gray-200 dark:bg-gray-900 border-1 border-gray-300 overflow-hidden p-4 flex flex-col 
+    items-center rounded-lg text-lg text-gray-900 dark:text-gray-200">
         <div :id="'dz-popup-'+ props.name" class="hidden absolute z-20 bg-gray-400/90 top-0 bottom-0 left-0 right-0 
         pointer-events-none">
             <div class="w-full h-full flex justify-center items-center">
@@ -16,7 +17,7 @@
                     <div v-if="file.value.stat === 'loading'" class="absolute top-0 right-0 left-0 bottom-0">
                         <div :style="{ width: file.value.done + '%' }" class="bg-green-600 h-full -z-10 rounded-lg"></div>
                     </div>
-                    <div class="flex items-center z-10">
+                    <div class="flex items-center z-10 mr-8">
                         <img :src="File.Icon(File.Extension(file.value.name))" class="h-10 dark:invert">
                         <p class="font-semibold ml-2">{{ file.value.name }}</p>
                     </div>
@@ -36,7 +37,7 @@
                 <img src="/icons/error.svg" class="h-10">
             </div>
         </div>
-        <p class="font-semibold">{{ empty }}</p>
+        <p class="text-black/80 font-medium">{{ empty }}</p>
     </div>
 </template>
 

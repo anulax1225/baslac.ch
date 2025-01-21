@@ -59,23 +59,20 @@ const closeOnEscape = (e) => {
 </script>
 
 <template>
-    <div @keypress="closeOnEscape" id="modal-image" class="fixed z-40 modal-base top-0 bottom-0 left-0 right-0 bg-black/90">
-        <div class="w-full h-full flex items-center justify-center z-50">
-            <button @click="previousPhoto" class="pr-3 hover:scale-105">
-                <img src="/icons/next.svg" class="h-16 invert rotate-180">
-            </button>
-            <div class="relative h-4/5 max-h-5xl">
-                <div class="absolute right-0 p-4">
-                    <button @click="close" class="bg-red-600 shadow-md shadow-gray-600 p-1 rounded-md">
-                        <img src="/icons/cancel.svg" class="h-8 invert pointer-events-none">
-                    </button>
-                </div>
-                <img :src="photo.path" class="h-full">
-            </div>
-            <button @click="nextPhoto" class="pl-3 hover:scale-105">
-                <img src="/icons/next.svg" class="h-16 invert">
-            </button>
-        </div>
+    <div class="w-full flex justify-end pt-2 pr-2">
+        <button @click="close" class="bg-red-600 shadow-lg p-1 rounded-md">
+            <img src="/icons/cancel.svg" class="h-8 invert pointer-events-none">
+        </button>
     </div>
-
+    <div class="w-full h-[600px] flex items-center justify-between">
+        <button @click="previousPhoto" class="pr-3 hover:scale-105">
+            <img src="/icons/next.svg" class="h-16 rotate-180">
+        </button>
+        <div class="relative h-full">
+            <img :src="photo.path" class="h-full">
+        </div>
+        <button @click="nextPhoto" class="pl-3 hover:scale-105">
+            <img src="/icons/next.svg" class="h-16">
+        </button>
+    </div>
 </template>

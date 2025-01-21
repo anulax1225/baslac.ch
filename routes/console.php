@@ -2,7 +2,17 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
+use App\Utils\Mail;
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote')->hourly();
+Artisan::command('mail', function () {
+    $user = User::find(1);
+
+    Mail::send((object)[
+        "template" => "email.test",
+        "user" => $user,
+        "subject" => "Test mail envoyé",
+        "data" => []
+    ]);
+
+})->purpose('Send test mail');

@@ -1,5 +1,5 @@
 <script setup>
-import GuestLayout from '@/Layouts/AuthLayout.vue';
+import AuthLayout from '@/Layouts/AuthLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -21,9 +21,8 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
+    <AuthLayout>
         <Head title="Register" />
-
         <form @submit.prevent="submit">
             <div>
                 <InputLabel for="name" value="Name" />
@@ -109,5 +108,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </GuestLayout>
+    </AuthLayout>
 </template>
