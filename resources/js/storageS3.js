@@ -70,7 +70,7 @@ export default class StorageS3
         return response.json(); 
     }
 
-    static async UploadPart(signedUrl, partData, partNumber)
+    static async TestUploadPart(signedUrl, partData, partNumber)
     {
         const response = await fetch(signedUrl, {
             method: 'PUT',
@@ -81,13 +81,12 @@ export default class StorageS3
             body: partData,
         });
         if (!response.ok) {
-            console.log(response);
             throw new Error(`Failed to upload part: ${partNumber} `);
         }
         return response.json(); // Returns ETag
     }
 
-    static async ProxyUploadPart(signedUrl, partData, partNumber)
+    static async UploadPart(signedUrl, partData, partNumber)
     {
         const response = await fetch(`${StorageS3.options.proxyMultipartUrl}`, {
             method: 'PUT',
