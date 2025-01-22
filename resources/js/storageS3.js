@@ -75,12 +75,13 @@ export default class StorageS3
         const response = await fetch(signedUrl, {
             method: 'PUT',
             headers: {
+                "Content-Type": "binary/octet-stream",
                 "Content-Length": partData.length,
             },
             body: partData,
         });
         if (!response.ok) {
-            throw new Error(`Failed to upload part: ${partNumber}`);
+            throw new Error(`Failed to upload part: ${partNumber} `);
         }
         return response.json(); // Returns ETag
     }
@@ -97,7 +98,7 @@ export default class StorageS3
             body: partData,
         });
         if (!response.ok) {
-            throw new Error(`Failed to upload part: ${partNumber}`);
+            throw new Error(`Failed to upload part: ${partNumber} ${response}`);
         }
         return response.json(); // Returns ETag
     }
