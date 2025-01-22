@@ -56,12 +56,12 @@ const submit = () => {
             </div>
             <div v-if="!pic.edit" @click="pic.active = !pic.active" class="relative">
                 <div class="w-32 overflow-hidden flex justify-center rounded-full bg-black/80">
-                    <img :src="user.pic" class="h-32">
+                    <img :src="user.pic" class="h-32" :class="{ 'invert': user.path === 'profiles/none.svg' }">
                 </div>
                 <div @click="(e) => { Utils.Prevent(e); pic.edit = true; }" :class="{ 'hidden': !pic.active }" 
-                class="absolute top-full right-0 w-40 mt-1 bg-gray-100 text-sm text-black/80 rounded-md shadow-lg overflow-hidden">
-                    <p class="px-3 py-2 hover:bg-gray-50 hover:scale-[1.01]">Changer la photo</p>
-                    <p class="px-3 py-2 hover:bg-gray-50 hover:scale-[1.01]" >Retirer la photo</p>
+                class="absolute top-full right-0 w-40 mt-1 bg-white text-sm text-black/80 rounded-md shadow-xl overflow-hidden">
+                    <p class="px-3 py-2 hover:bg-gray-100 hover:scale-[1.01]">Changer la photo</p>
+                    <p class="px-3 py-2 hover:bg-gray-100 hover:scale-[1.01]" >Retirer la photo</p>
                 </div>
             </div>
             <div v-else class="flex">

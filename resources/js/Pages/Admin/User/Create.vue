@@ -40,7 +40,7 @@ const submit = () => {
                 <div class="w-full bg-white shadow rounded-lg px-8 py-8 mt-10">
                     <form @submit.prevent="submit" class="max-w-2xl">
                         <div class="">
-                            <InputLabel for="name" value="Nom *" />
+                            <InputLabel for="name" value="Nom et prénom *" />
                             <TextInput
                                 id="name"
                                 type="text"

@@ -66,7 +66,7 @@ const submit = async () => {
 </script>
 
 <template>
-    <div class="text-left text-black w-[30rem] shadow-lg shadow-gray-400 rounded-lg bg-gray-50 overflow-hidden
+    <div class="text-left text-black w-[30rem] shadow-2xl rounded-lg bg-gray-50 overflow-hidden
     border border-gray-300">
         <div v-if="imageState.url" class="max-h-72 overflow-hidden flex items-center">
             <img  :src="imageState.url">

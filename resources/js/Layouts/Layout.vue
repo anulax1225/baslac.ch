@@ -54,7 +54,7 @@ const user = usePage().props.auth.user;
                                 <p class="mr-2">{{ user.name }}</p>
 
                                 <div class="w-10 overflow-hidden rounded-full bg-black/80 flex justify-center items-center">
-                                    <img :src="pic" class="h-10">
+                                    <img :src="pic" class="h-10" :class="{ 'invert': user.path === 'profiles/none.svg' }">
                                 </div>
                             </button>
                         </span>

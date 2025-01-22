@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Utils\Mail;
 use App\Utils\Token;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -45,6 +46,7 @@ class UserController extends Controller
             "email" => $request->email,
             "name" => $request->name,
             "totem" => $request->totem,
+            "email_verified_at" => Carbon::now(),
         ]);
 
         $token = Token::create($user->email);
