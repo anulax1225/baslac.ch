@@ -38,10 +38,10 @@ class ProfileController extends Controller
         Storage::disk("s3")->move($request->path, $file);
         $user->update([
             "name" => $request->name,
-            "totem" => $request->totem,
-            "tel" => $request->tel,
+            "totem" => $request->totem ?? "",
+            "tel" => $request->tel ?? "",
             "contactable" => intval($request->contactable),
-            "path" => $file,
+            "path" => $file ?? "profiles/none.svg",
         ]);
 
         return redirect(route('profile.edit'));
