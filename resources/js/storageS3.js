@@ -72,6 +72,21 @@ export default class StorageS3
 
     static async UploadPart(signedUrl, partData, partNumber)
     {
+        const response = await fetch(signedUrl, {
+            method: 'PUT',
+            headers: {
+                "Content-Length": partData.length,
+            },
+            body: partData,
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to upload part: ${partNumber}`);
+        }
+        return response.json(); // Returns ETag
+    }
+
+    static async ProxyUploadPart(signedUrl, partData, partNumber)
+    {
         const response = await fetch(`${StorageS3.options.proxyMultipartUrl}`, {
             method: 'PUT',
             headers: {
