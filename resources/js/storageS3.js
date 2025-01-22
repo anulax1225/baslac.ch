@@ -81,6 +81,7 @@ export default class StorageS3
             body: partData,
         });
         if (!response.ok) {
+            console.log(response);
             throw new Error(`Failed to upload part: ${partNumber} `);
         }
         return response.json(); // Returns ETag
