@@ -104,7 +104,8 @@ const toggle = () => {
                     <p @click="toggle"
                     class="font-semibold laptop:mr-4 mr-1 laptop:text-lg text-sm laptop:hidden">Affichage</p>
                     <div id="affichage" class="absolute laptop:static hidden top-full mt-1 laptop:flex laptop:flex-row flex-col items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
-                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full laptop:border-r laptop:border-b-0 border-b border-gray-400 p-1
+                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full 
+                        laptop:border-r laptop:border-b-0 border-b border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/block-content.svg" class="h-7">
                         </button>
@@ -119,13 +120,12 @@ const toggle = () => {
                     </div>
                 </div>
                 <div class="relative flex items-center">
-                    
-                    <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
+                    <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md laptop:px-2 py-1">
                         <p class="font-medium laptop:mr-4 mr-1 laptop:text-lg text-sm">Ajouter une photo</p>
                         <img src="/icons/add.svg" class="h-8">
                     </button>
                     <Panel @data="(uuids) => addPhotos(uuids)" @close="create.active = !create.active" v-if="create.active" :album="props.album"
-                    class="absolute laptop:-right-0 top-[110%] z-10 mt-4" />
+                    class="absolute right-0 top-[110%] z-10 mt-4 " />
                 </div>
             </div>
         </template>

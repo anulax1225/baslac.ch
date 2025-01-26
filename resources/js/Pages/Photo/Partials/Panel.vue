@@ -38,11 +38,11 @@ uuids();
 
 <template>
     <div class="text-left text-black shadow-3xl shadow-gray-900 rounded-lg bg-gray-100 overflow-y-auto
-    border border-gray-500" :class="{ 'w-[30rem] max-h-[calc(100vh/2)]': !panelState.toggle, 'w-[60rem] h-[40rem]': panelState.toggle, }">
+    border border-gray-500" :class="{ 'laptop:w-[30rem] w-screen max-h-[calc(100vh/2)]': !panelState.toggle, 'laptop:w-[60rem] w-screen laptop:h-[40rem] laptop:pb-0 pb-32 h-screen': panelState.toggle, }">
         <div v-if="imageState.url && !panelState.toggle" class="max-h-72 overflow-hidden flex items-center">
             <img  :src="imageState.url">
         </div>
-        <div class="px-10 pb-5 pt-5">
+        <div class="laptop:px-10 px-2 pb-5 pt-5">
             <div  class="w-full flex justify-between mb-5 items-center">
                 <select @change="panelState.toggle = !panelState.toggle" class="bg-gray-200 border-none rounded shadow">
                     <option>Photo Existante</option>

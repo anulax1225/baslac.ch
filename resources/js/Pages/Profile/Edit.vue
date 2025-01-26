@@ -25,21 +25,21 @@ defineProps({
         </template>
         <template #content>
             <div class="py-12">
-                    <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+                    <div class="mx-auto max-w-7xl space-y-6 laptop:px-6 desktop:px-8">
                         <div
-                            class="bg-gray-50 p-4 shadow sm:rounded-lg sm:p-8"
+                            class="bg-gray-50 p-4 shadow laptop:rounded-lg laptop:p-8"
                         >
                             <UpdateProfileInformationForm
                                 :must-verify-email="mustVerifyEmail"
                                 :status="status"
-                                class="pr-64"
+                                class="tablet:pr-64"
                             />
                         </div>
 
                         <div
-                            class="bg-gray-50 p-4 shadow sm:rounded-lg sm:p-8"
+                            class="bg-gray-50 p-4 shadow laptop:rounded-lg laptop:p-8"
                         >
-                            <UpdatePasswordForm class="pr-64" />
+                            <UpdatePasswordForm class="tablet:pr-64" />
                         </div>
                     </div>
                 </div>

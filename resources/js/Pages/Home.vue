@@ -8,13 +8,13 @@ import Layout from '@/Layouts/Layout.vue';
     <Head title="Home"/>
     <Layout>
         <template #content>
-            <div class="relative w-full h-96 flex items-center overflow-hidden">
-                <img src="/img/sarasin.png" class="w-full pb-96">
-                <p class="text-center absolute text-white/65 text-[180px] leading-[180px] font-bold left-0 right-0">Scout Baslac</p>
+            <div class="relative w-full laptop:h-96 flex items-center overflow-hidden max-h-96">
+                <img src="/img/sarasin.png" class="w-full laptop:pb-96">
+                <p class="text-center absolute text-white/65 laptop:text-[180px] text-8xl laptop:leading-[180px] font-bold left-0 right-0">Scout Baslac</p>
             </div>
             <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] px-2  flex flex-col">
                 <div class="my-5">
-                    <p class="w-full text-5xl border-b border-gray-300 pb-2 mb-2 font-semibold">Qui sommes-nous?</p>
+                    <p class="w-full laptop:text-5xl text-3xl border-b border-gray-300 pb-2 mb-2 font-semibold">Qui sommes-nous?</p>
                     <p class="mb-2">
                         Le Groupement scout du Bas-Lac existe depuis bientôt trente ans mais repose sur une tradition depuis 1920 sur Saint-Blaise. 
                         La base du scoutisme est la relation avec la nature (respect de l’environnement, reconnaissance de la faune et de la flore, construction de cabanes ou abris, 
@@ -44,7 +44,7 @@ import Layout from '@/Layouts/Layout.vue';
                     </p>
                 </div>
                 <div class="my-5">
-                    <p class="w-full text-5xl border-b border-gray-300 pb-2 mb-2 font-semibold">Nos groupes par âge</p>
+                    <p class="w-full laptop:text-5xl text-3xl border-b border-gray-300 pb-2 mb-2 font-semibold">Nos groupes par âge</p>
                     <p class="mb-2">Notre groupe est divisé par tranche d'âge allant de 7 à 25 ans pour les participants</p>
                     <ul class="list-disc px-6">
                         <li class="mb-2">
@@ -88,7 +88,7 @@ import Layout from '@/Layouts/Layout.vue';
                     </ul> 
                 </div>
                 <div class="my-5">
-                    <p class="w-full text-5xl border-b border-gray-300 pb-2 mb-2 font-semibold">Information pratique</p>
+                    <p class="w-full laptop:text-5xl text-3xl border-b border-gray-300 pb-2 mb-2 font-semibold">Information pratique</p>
                     <p class="mb-2">Voici les informations principal pour s'engager.</p>
                     <ul class="list-disc px-6">
                         <li class="mb-2">

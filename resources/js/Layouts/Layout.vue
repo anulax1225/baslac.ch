@@ -4,6 +4,7 @@ import NavLink from '@/Components/NavLink.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import { useSlots } from 'vue';
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 const slots = useSlots();
 const pic = usePage().props.user ? usePage().props.user.pic : "";
 usePage().props.user, usePage().props;
@@ -15,10 +16,10 @@ const toggleMenu = () => {
 </script>
 
 <template>
-    <nav class="sticky w-full z-30 top-0 right-0 left-0">
-        <div class="w-full h-16 flex desktop:px-[17.5%] laptop:px-[12.5%] px-2  justify-between border-b border-gray-300 bg-gray-100 text-gray-900">
+    <nav class="sticky z-20 w-full top-0 right-0 left-0">
+        <div class="w-full h-16 z-40 flex desktop:px-[17.5%] laptop:px-[12.5%] px-2  justify-between border-b border-gray-300 bg-gray-100 text-gray-900">
             <div :class="{ 'w-full': !user }" class="flex h-full justify-between">
-                <Link :href="user ? route('photo.index') : route('home')" :class="'h-full mr-5 w-fit'">
+                <Link :href="user ? route('photo.index') : route('home')" :class="'h-full mr-5 z-40 w-fit'">
                     <img src="/img/logo.png" class="h-full laptop:py-1.5 py-3">
                 </Link>
                 <div class="laptop:flex hidden text-black/80">
@@ -69,16 +70,60 @@ const toggleMenu = () => {
                     </template>
                 </Dropdown>
             </div>
-            <div class="h-full flex items-center">
+            <div class="laptop:hidden h-full z-40 flex items-center">
                 <button @click="toggleMenu"><img src="/icons/menu.svg" class="h-10"></button>
             </div>
         </div>
-        <div v-if="slots.header" class="w-full max-h-[3.5rem] desktop:px-[17.5%] laptop:px-[12.5%] px-2  py-auto bg-gray-50 border-b border-gray-300 text-gray-900">
+        <div v-if="slots.header" class="w-full z-20 max-h-[3.5rem] desktop:px-[17.5%] laptop:px-[12.5%]  py-auto bg-gray-50 border-b border-gray-300 text-gray-900">
             <slot name="header"/>
         </div>
     </nav>
-    <div id="menu-content" class="laptop:hidden hidden fixed z-10 top-0 bottom-0 right-0 left-0 bg-gray-100">
-        
+    <div id="menu-content" class="laptop:hidden hidden fixed z-30 top-0 bottom-0 right-0 left-0 bg-gray-100 mt-[64px] overflow-y-auto">
+        <div class="z-10 flex flex-col border-b border-gray-200">
+            <ResponsiveNavLink v-if="!user" :href="route('home')" :active="route().current('home')">
+                Home
+            </ResponsiveNavLink>
+            <!-- <NavLink v-if="!user" :href="'#'" :active="false">
+                Posts
+            </NavLink>
+            <NavLink v-if="!user" :href="route('info')" :active="route().current('info')">
+                Infos
+            </NavLink>
+            <NavLink v-if="!user" :href="'#'" :active="false">
+                News letter
+            </NavLink> -->
+            <ResponsiveNavLink v-if="!user" :href="route('login')" :active="route().current('login')">
+                Log in
+            </ResponsiveNavLink>
+            <ResponsiveNavLink v-if="user" :href="route('photo.index')" :active="route().current('photo.*')">
+                Photothèque
+            </ResponsiveNavLink>
+            <ResponsiveNavLink v-if="user" :href="route('album.index')" :active="route().current('album.*')">
+                Albums
+            </ResponsiveNavLink>
+            <ResponsiveNavLink v-if="user" :href="route('admin.user.index')" :active="route().current('admin.*')">
+                Admin
+            </ResponsiveNavLink>
+        </div>
+        <div v-if="user" class="z-10 flex flex-col border-b border-gray-200">
+            <span class="w-full flex rounded-md hover:cursor-pointer focus:cursor-pointer">
+                <button type="button" class="w-full flex items-center justify-between px-3 py-2 border border-transparent text-sm leading-4 
+                    font-medium rounded-md text-black/80 hover:text-gray-700 
+                    dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                    <p class="mr-2">{{ user.name }}</p>
+
+                    <div class="w-10 overflow-hidden rounded-full bg-black/80 flex justify-center items-center">
+                        <img :src="pic" class="h-10" :class="{ 'invert': user.path === 'profiles/none.svg' }">
+                    </div>
+                </button>
+            </span>
+            <ResponsiveNavLink v-if="user" :href="route('profile.edit')" :active="route().current('profile.edit')">
+                Profile
+            </ResponsiveNavLink>
+            <ResponsiveNavLink v-if="user" :href="route('logout')">
+                Log Out
+            </ResponsiveNavLink>
+        </div>
     </div>
     <slot name="content"/>
     <footer class="w-full desktop:px-[17.5%] laptop:px-[12.5%] px-2  bg-gray-50 text-gray-900 flex items-center justify-between">

@@ -46,24 +46,24 @@ initLoad();
 </script>
 
 <template>
-<div class="flex pb-10 h-[35rem]">
+<div class="flex pb-10 laptop:h-[35rem] h-full overflow-y-auto">
     <div class="flex flex-col items-start justify-between w-32 border-r border-gray-200 pr-2">
         <div class="w-full">
             <p class="px-1 mb-4 py-1 border-b border-gray-200 text-gray-400 font-semibold">Les albums</p>
-            <p class="mb-4 py-1 px-2  text-gray-700 rounded shadow"
+            <p class="mb-4 py-1 laptop:px-2 pl-1  text-gray-700 rounded shadow laptop:text-lg text-sm"
             @click="loadAlbum('')"
             :class="{ 'bg-gray-200': albumState.focusAlbum === '', 'bg-gray-100': albumState.focusAlbum !== ''}">Photothèque</p>
             <p v-for="album in albumState.albums" 
             @click="loadAlbum(album.uuid)"
-            class="mb-2 py-1 px-2 bg-gray-100 text-gray-700 
+            class="mb-2 py-1 laptop:px-2 pl-1 bg-gray-100 text-gray-700 laptop:text-lg text-sm
             overflow-hidden text-nowrap rounded shadow" 
             :class="{ 'bg-gray-200': albumState.focusAlbum === album.uuid, 'bg-gray-100': albumState.focusAlbum !== album.uuid}">{{ album.name }}</p>
-            <p class="my-1 py-1 px-2 bg-gray-100 text-gray-700  rounded shadow">plus d'album</p>
+            <p class="hidden my-1 py-1 laptop:px-2 pl-1 bg-gray-100 text-gray-700  rounded shadow laptop:text-lg text-sm">plus d'album</p>
         </div>
         <button @click="emits('data', photos)" class="text-white font-semibold p-1 px-2 bg-primary rounded-md">Ajouter</button>
     </div>
     <div class="w-[calc(100%-8rem)] h-full overflow-y-scroll py-5 ml-2">
-        <div class="grid grid-cols-3">
+        <div class="grid tablet:grid-cols-3">
             <PanelShow v-for="(photo, index) in albumState.photos" v-show="!props.hiddenPhotos.includes(photo.uuid)" :photo="photo"
             :index="index" :length="albumState.photos.length" :columns="3" :active="photos.includes(photo.uuid)"
             @photo-added="(uuid) => { if(!photos.includes(uuid)) photos.push(uuid) }"
@@ -72,7 +72,7 @@ initLoad();
         </div>
         <div v-if="albumState.pageCount < albumState.lastPage" class="py-2 w-full flex justify-center">
             <button @click="loadPhotos(albumState.focusAlbum, ++albumState.pageCount)" class="bg-gray-100 p-2 font-medium text-gray-700 
-            rounded shadow hover:scale-[1.01]">Afficher plus de photos</button>
+            rounded shadow hover:scale-[1.01] laptop:text-lg text-sm">Afficher plus de photos</button>
         </div>
     </div>
 </div>

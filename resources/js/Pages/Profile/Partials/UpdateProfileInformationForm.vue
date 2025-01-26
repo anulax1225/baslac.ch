@@ -45,8 +45,8 @@ const submit = () => {
 
 <template>
     <section class="">
-        <header :class="{'items-center' : !pic.edit}" class="flex justify-between">
-            <div>
+        <header :class="{'items-center' : !pic.edit}" class="flex tablet:flex-row flex-col-reverse tablet:justify-between justify-center">
+            <div class="tablet:w-fit tablet:mt-0 w-full mt-5">
                 <h2 class="text-xl font-medium text-gray-900">
                     Information Profile 
                 </h2>
@@ -59,7 +59,7 @@ const submit = () => {
                     <img :src="user.pic" class="h-32" :class="{ 'invert': user.path === 'profiles/none.svg' }">
                 </div>
                 <div @click="(e) => { Utils.Prevent(e); pic.edit = true; }" :class="{ 'hidden': !pic.active }" 
-                class="absolute top-full right-0 w-40 mt-1 bg-white text-sm text-black/80 rounded-md shadow-xl overflow-hidden">
+                class="absolute top-full tablet:right-0 w-40 mt-1 bg-white text-sm text-black/80 rounded-md shadow-xl overflow-hidden">
                     <p class="px-3 py-2 hover:bg-gray-100 hover:scale-[1.01]">Changer la photo</p>
                     <p class="px-3 py-2 hover:bg-gray-100 hover:scale-[1.01]" >Retirer la photo</p>
                 </div>
