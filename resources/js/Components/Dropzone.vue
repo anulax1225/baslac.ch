@@ -1,8 +1,8 @@
 <template>
     <div @click="openDialog" :id="'dz-' + props.name" @drop="dropFiles" @dragover="Utils.Prevent" @drag="Utils.Prevent" @dragenter="popupShow" @dragleave="popupClose"
     :class="{ 'border-dashed': !props.disabled }"
-    class="w-full relative border-2 bg-gray-200 dark:bg-gray-900 border-1 border-gray-300 overflow-hidden p-4 flex flex-col 
-    items-center rounded-lg text-lg text-gray-900 dark:text-gray-200">
+    class="w-full relative border-2 bg-gray-200  border-1 border-gray-300 overflow-hidden p-4 flex flex-col 
+    items-center rounded-lg text-lg text-gray-900 ">
         <div :id="'dz-popup-'+ props.name" class="hidden absolute z-20 bg-gray-400/90 top-0 bottom-0 left-0 right-0 
         pointer-events-none">
             <div class="w-full h-full flex justify-center items-center">
@@ -11,7 +11,7 @@
         </div>
         <input @change="fileSelected" :id="'dz-input-' + props.name" type="file" class="hidden" :multiple="props.multiple" :accept="props.accept">
         <div v-for="file in files" class="w-full flex items-center">
-            <div class="relative w-full flex justify-between items-center bg-gray-100 dark:bg-gray-800 
+            <div class="relative w-full flex justify-between items-center bg-gray-100 
             rounded-lg mb-1 p-2 mr-2 z-0 ">
                 <a :href="file.url" target="_blank" class="w-full flex justify-between items-center">
                     <div v-if="file.value.stat === 'loading'" class="absolute top-0 right-0 left-0 bottom-0">
