@@ -8,9 +8,11 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\S3Controller;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return Inertia::render('Home');
+    if(Auth::check()) return redirect(route("photo.index"));
+    else return Inertia::render('Home');
 })->name('home');
 
 Route::get('/info', function () {
