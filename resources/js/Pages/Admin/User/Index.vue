@@ -20,7 +20,7 @@ const props = defineProps({
             <div class="w-full flex justify-between items-center py-1">
                 <button class="bg-gray-300 p-2 py-1 rounded shadow text-gray-800">Utilisateurs</button>
                 <Link :href="route('admin.user.create')" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
-                        <p class="font-medium mr-4">Ajouter une photo</p>
+                        <p class="font-medium mr-4">Ajouter un utilisateur</p>
                         <img src="/icons/add.svg" class="h-8">
                 </Link>
             </div>
