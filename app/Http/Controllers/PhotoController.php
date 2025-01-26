@@ -74,6 +74,40 @@ class PhotoController extends Controller
         ]);
     }
 
+
+        /**
+     * Store a newly created resource in storage.
+     */
+    public function stores(Request $request)
+    {
+        $request->validate([
+            "files" => "required"
+        ]);
+
+        $redirect = $request->redirect ?? true;
+        $uuids = [];
+        foreach($request["files"] as $file) {
+            $file = (object)$file;
+            if(!Storage::disk("s3")->exists($file->path)) 
+                return redirect()->back()->withErrors(["path" => "Probleme with the file transfert"]);
+            $uuid = Str::uuid();
+            $path = "photos/" . $uuid . "-" . $file->name . "." . pathinfo($file->path, PATHINFO_EXTENSION);
+            Storage::disk("s3")->move($file->path, $path);
+            $photo = Photo::create([
+                "uuid" => $uuid,
+                "name" => $file->name,
+                "path" => $path,
+                "user_id" => Auth::user()->id
+            ]);
+            array_push($uuids, $photo->uuid);
+        }
+        if($redirect) {
+            return redirect()->back();
+        }
+        return response()->json([
+            "uuids" => $uuids
+        ]);
+    }
     /**
      * Update the specified resource in storage.
      */

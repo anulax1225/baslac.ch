@@ -49,12 +49,13 @@ initLoad();
 <div class="flex pb-10 h-[35rem]">
     <div class="flex flex-col items-start justify-between w-32 border-r border-gray-200 pr-2">
         <div class="w-full">
-            <p class="my-1 py-1 px-2  text-gray-700 rounded shadow"
+            <p class="px-1 mb-4 py-1 border-b border-gray-200 text-gray-400 font-semibold">Les albums</p>
+            <p class="mb-4 py-1 px-2  text-gray-700 rounded shadow"
             @click="loadAlbum('')"
             :class="{ 'bg-gray-200': albumState.focusAlbum === '', 'bg-gray-100': albumState.focusAlbum !== ''}">Photothèque</p>
             <p v-for="album in albumState.albums" 
             @click="loadAlbum(album.uuid)"
-            class="my-1 py-1 px-2 bg-gray-100 text-gray-700 
+            class="mb-2 py-1 px-2 bg-gray-100 text-gray-700 
             overflow-hidden text-nowrap rounded shadow" 
             :class="{ 'bg-gray-200': albumState.focusAlbum === album.uuid, 'bg-gray-100': albumState.focusAlbum !== album.uuid}">{{ album.name }}</p>
             <p class="my-1 py-1 px-2 bg-gray-100 text-gray-700  rounded shadow">plus d'album</p>

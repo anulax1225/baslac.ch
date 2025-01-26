@@ -18,16 +18,18 @@ const props = defineProps({
 const dropzone = ref(null);
 
 const form = useForm({
-    name: "",
-    path: "",
+    files: [],
     redirect: props.redirect, 
 })
 
 const emits = defineEmits(["data", "close", "file-added", "file-removed"]);
 
 const imageAdded = (file) => {
-    form.path = file.key;
-    if(form.name === "") form.name = File.Basename(file.key).split("_")[1];
+    form.files.push({
+        name: File.Basename(file.key).split("_")[1],
+        original_name: File.Basename(file.key).split("_")[1] + "." + File.Extension(file.key),
+        path:file.key,
+    });
     emits('file-added', file)
 } 
 
@@ -39,24 +41,27 @@ const imageRemoved = (file) => {
 
 const submit = async () => {
     if(!props.redirect) {
-        let res = await axios.post("/photo", {
-            name: form.name,
-            path: form.path,
+        let res = await axios.post("/photos", {
+            files: form.files,
             redirect: false, 
+        }, {
+            headers: {
+                "Content-Type": "application/json",
+            }
         })
-        const uuid = res.data.uuid;
-        console.log(uuid, res);
-        emits("data", uuid);
+        const uuids = res.data.uuids;
+        console.log(uuids, res);
+        emits("data", uuids);
     } else {
-        form.post("/photo", {
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": document.querySelector('input[name=_token]').value,
-        },
-    });
+        form.post("/photos", {
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-Token": document.querySelector('input[name=_token]').value,
+            },
+            onSuccess: () => window.location.reload()
+        });
     }
-    form.path = "";
-    form.name = "";
+    form.files = [];
     dropzone.value.removeFiles();
     emits("close");
 }
@@ -71,13 +76,11 @@ const submit = async () => {
         @file-removed="imageRemoved" 
         :name="photos"
         :empty="'Téléversé une image'"
-        :multiple="false"
         :accept="'image/*'"
         :class="'mb-1'" 
         />
         <InputError :message="form.errors.path"/>
-        <p class="mt-3">Nom</p>
-        <TextInput :class="'mb-1 w-full'" v-model="form.name" required :placeholder="'Nom de la photo'"/>
+        <TextInput v-for="file in form.files" :class="'mb-1 w-full'" v-model="file.name" required :placeholder="'Changer le nom de l\'image ' + file.original_name"/>
         <InputError :message="form.errors.name"/>
         <div class="w-full flex justify-end mt-3">
             <button type="submit" class="text-white font-semibold p-1 px-2 bg-primary rounded-md">Ajouter</button>

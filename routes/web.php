@@ -21,6 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
     Route::get('/photos/page/{page}', [PhotoController::class, 'pages'])->name('photo.page');
     Route::post('/photo', [PhotoController::class, 'store'])->name('photo.store');
+    Route::post('/photos', [PhotoController::class, 'stores'])->name('photo.stores');
     Route::post('/photo/{id}', [PhotoController::class, 'update'])->name('photo.update');
     Route::delete('/photo/{id}', [PhotoController::class, 'destroy'])->name('photo.destroy');
     

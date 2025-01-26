@@ -37,9 +37,9 @@ uuids();
 </script>
 
 <template>
-    <div class="text-left text-black shadow-2xl rounded-lg bg-gray-50
-    border border-gray-300" :class="{ 'w-[30rem]': !panelState.toggle, 'w-[60rem] h-[40rem]': panelState.toggle, }">
-        <div v-if="imageState.url" class="max-h-72 overflow-hidden flex items-center">
+    <div class="text-left text-black shadow-3xl shadow-gray-900 rounded-lg bg-gray-100 overflow-y-auto
+    border border-gray-500" :class="{ 'w-[30rem] max-h-[calc(100vh/2)]': !panelState.toggle, 'w-[60rem] h-[40rem]': panelState.toggle, }">
+        <div v-if="imageState.url && !panelState.toggle" class="max-h-72 overflow-hidden flex items-center">
             <img  :src="imageState.url">
         </div>
         <div class="px-10 pb-5 pt-5">
@@ -59,7 +59,7 @@ uuids();
             v-show="!panelState.toggle"
             @file-added="imageAdded"
             @file-removed="imageRemoved"
-            @data="(uuid) => emits('data', [uuid])"
+            @data="(uuids) => emits('data', uuids)"
             @close="emits('close')"
             :redirect="false"
             /> 
