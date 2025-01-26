@@ -13,6 +13,6 @@ class Tag extends Model
 
     public function albums()
     {
-        return $this->belongsToMany(Album::class);
+        return $this->belongsToMany(Album::class)->withTimestamps();
     }
 }

@@ -33,11 +33,11 @@ class Album extends Model
 
     public function photos()
     {
-        return $this->belongsToMany(Photo::class);
+        return $this->belongsToMany(Photo::class)->withTimestamps();
     }
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 }

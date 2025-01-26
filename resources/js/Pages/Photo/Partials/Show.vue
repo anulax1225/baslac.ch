@@ -22,23 +22,17 @@ const props = defineProps({
         type: Number,
         default: 3,
     },
+    noEdit: {
+        type: Boolean,
+        default: false
+    }
 });
-
-const form = useForm();
 
 const photoState = reactive({ edit: false });
 
-const emits = defineEmits(["full-screen"]);
+const emits = defineEmits(["full-screen", "delete-photo"]);
 
-const deletePhoto = async () => {
-    if(confirm("Voulez-vous vraiment supprimé cette photo")){
-        form.delete("/photo/" + props.photo.uuid, {
-            headers: {
-                "X-CSRF-Token": document.querySelector('input[name=_token]').value,
-            },
-        });
-    }
-}
+
 </script>
 
 <template>
@@ -53,14 +47,14 @@ const deletePhoto = async () => {
             <div class="flex items-center">
                 <button @click="() => emits('full-screen', props.photo.uuid)" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/full-screen.svg" class="h-6 invert"></button>
                 <div class="relative">
-                    <button @click="photoState.edit = !photoState.edit" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/modify.svg" class="h-6 invert"></button>
-                    <Edit v-if="photoState.edit"
+                    <button v-if="!props.noEdit"@click="photoState.edit = !photoState.edit" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/modify.svg" class="h-6 invert"></button>
+                    <Edit v-if="photoState.edit && !props.noEdit"
                     @close="() => photoState.edit = false"
                     :photo="props.photo"
                     :class="'absolute left-0 top-full mt-2'"
                     />
                 </div>
-                <button @click="deletePhoto" class="bg-red-600 p-1 rounded-md"><img src="/icons/delete.png" class="h-6 invert"></button>
+                <button @click="emits('delete-photo', props.photo.uuid)" class="bg-red-600 p-1 rounded-md"><img src="/icons/delete.png" class="h-6 invert"></button>
             </div>
         </div>
         <div class="hidden absolute left-0 right-0 bottom-0 p-2 group-hover:flex justify-between flex-wrap items-end">

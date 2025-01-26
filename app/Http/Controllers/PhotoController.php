@@ -14,13 +14,28 @@ class PhotoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $total = Photo::count();
+        $pageSize = 12;
+        $page = 1;
         return Inertia::render('Photo/Index', [
-            "photos" => Photo::orderBy("created_at", "DESC")->get()->jsonSerialize(),
+            "lastPage" => ceil($total / $pageSize),
+            "photos" => Photo::orderBy("created_at", "DESC")->offset($page * $pageSize - $pageSize)->limit($pageSize)->get()->jsonSerialize(),
         ]);
     }
 
+    public function pages(Request $request)
+    {
+        $pageSize = 12;
+        $total = Photo::count();
+        $page = $request->page ?? 2;
+        $page = $request->page <= ceil($total / $pageSize) ? $page : ceil($total / $pageSize);
+        return response()->json([
+            "lastPage" => ceil($total / $pageSize),
+            "photos" => Photo::orderBy("created_at", "DESC")->offset($page * $pageSize - $pageSize)->limit($pageSize)->get()->jsonSerialize(),
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */

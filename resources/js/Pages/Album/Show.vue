@@ -5,6 +5,7 @@ import Create from '@/Pages/Photo/Partials/Create.vue';
 import Show from'@/Pages/Photo/Partials/Show.vue';
 import Modal from '@/Pages/Photo/Partials/Modal.vue';
 import { reactive, ref } from 'vue';
+import Panel from '../Photo/Partials/Panel.vue';
 
 const props = defineProps({
     album: {
@@ -15,19 +16,23 @@ const props = defineProps({
         type: Array,
         default: []
     },
+    lastPage: {
+        type: Number,
+        default: 1,
+    }
 });   
 
-const form = useForm({ uuid: "" });
+const form = useForm({ uuids: [] });
 const create = reactive({ active: false });
 
 const fullScreenState = reactive({ photo: {}, active: false });
-const viewState = reactive({ square: true, list: false });
+const photoState = reactive({ square: true, list: false, pageCount: 1, photos: props.photos });
 
 const fullScreen = (photo) => {
     fullScreenState.photo = photo;
     fullScreenState.active = true;
-    viewState.square = false; 
-    viewState.list = false;
+    photoState.square = false; 
+    photoState.list = false;
 }
 
 const gridState = reactive({ columns: 3 });
@@ -35,25 +40,49 @@ const gridState = reactive({ columns: 3 });
 const squareView = () => {
     gridState.columns = 3; 
     fullScreenState.active = false;
-    viewState.square = true; 
-    viewState.list = false;
+    photoState.square = true; 
+    photoState.list = false;
 }
 
 const listView = () => {
     gridState.columns = 1; 
     fullScreenState.active = false;
-    viewState.square = false; 
-    viewState.list = true;
+    photoState.square = false; 
+    photoState.list = true;
 }
 
-const addPhoto = (uuid) => {
+const addPhotos = (uuids) => {
     console.log("uuid");
-    form.uuid = uuid;
+    form.uuids = uuids;
     form.post("/album/" + props.album.uuid + "/add",{
         headers: {
             "X-CSRF-Token": document.querySelector('input[name=_token]').value,
         },
+        onSuccess: () => window.location.reload()
     });
+}
+
+const loadPhotos = async () => {
+    photoState.pageCount++;
+    const res = await axios.get(route("album.photo.page", {
+        id: props.album.uuid,
+        page: photoState.pageCount
+    })); 
+    photoState.photos = photoState.photos.concat(res.data.photos)
+    console.log("hello", res.data.photos, photoState.photos, props.lastPage)
+}
+
+const deletePhoto = (uuid) => {
+    if(confirm("Voulez-vous vraiment retirer cette photo de l'album")){
+        form.delete(route("album.photo.remove", {id: props.album.uuid, photoId: uuid}), {
+            headers: {
+                "X-CSRF-Token": document.querySelector('input[name=_token]').value,
+            },
+            onSuccess: () => {
+                photoState.photos = photoState.photos.filter(photo => photo.uuid != uuid);
+            }
+        });
+    }
 }
 </script>
 
@@ -65,15 +94,15 @@ const addPhoto = (uuid) => {
                 <div class="relative flex items-center">
                     <p class="font-semibold mr-4">Affichage</p>
                     <div class="flex items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
-                        <button @click="squareView" :class="{'bg-black/5': viewState.square}" class="flex items-center h-full border-r border-gray-400 p-1
+                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full border-r border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/block-content.svg" class="h-7">
                         </button>
-                        <button @click="listView" :class="{'bg-black/5': viewState.list}" class="flex items-center h-full border-r border-gray-400 p-1
+                        <button @click="listView" :class="{'bg-black/5': photoState.list}" class="flex items-center h-full border-r border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/list.svg" class="h-7">
                         </button>
-                        <button @click="() => fullScreen(props.photos[0].uuid)" :class="{'bg-black/5': fullScreenState.active}" class="flex items-center p-1
+                        <button @click="() => fullScreen(photoState.photos[0].uuid)" :class="{'bg-black/5': fullScreenState.active}" class="flex items-center p-1
                             hover:bg-black/5">
                             <img src="/icons/slider.svg" class="h-7">
                         </button>
@@ -85,7 +114,8 @@ const addPhoto = (uuid) => {
                         <p class="font-medium mr-4">Ajouter une photo</p>
                         <img src="/icons/add.svg" class="h-8">
                     </button>
-                    <Create :redirect="false" @data="(uuid) => addPhoto(uuid)" @close="create.active = !create.active" v-if="create.active" class="absolute -right-0 top-[110%] z-10 mt-4" />
+                    <Panel @data="(uuids) => addPhotos(uuids)" @close="create.active = !create.active" v-if="create.active" :album="props.album"
+                    class="absolute -right-0 top-[110%] z-10 mt-4" />
                 </div>
             </div>
         </template>
@@ -101,12 +131,17 @@ const addPhoto = (uuid) => {
                 <div class="w-full h-full pb-20 px-1 bg-black/5">
                     <div v-if="!fullScreenState.active" :class="{'grid-cols-3':  gridState.columns === 3}" 
                     class="w-full grid pt-10">
-                        <Show v-for="(photo, index) in props.photos" 
-                        :photo="photo" :index="index" :length="props.photos.length" :columns="gridState.columns"
+                        <Show v-for="(photo, index) in photoState.photos" 
+                        :photo="photo" :index="index" :length="photoState.photos.length" :columns="gridState.columns" :noEdit="true"
                         @full-screen="fullScreen"
+                        @delete-photo="deletePhoto"
                         />
                     </div>
-                    <Modal v-if="fullScreenState.active" :photoId="fullScreenState.photo" :photos="props.photos"
+                    <div v-if="!fullScreenState.active && photoState.pageCount < props.lastPage" class="w-full pt-5 flex items-center justify-center">
+                        <button @click="loadPhotos"
+                        class="bg-gray-100 p-2 font-medium text-gray-700 rounded shadow hover:scale-[1.01]">Afficher plus de photos</button>
+                    </div>
+                    <Modal v-if="fullScreenState.active" :photoId="fullScreenState.photo" :photos="photoState.photos"
                     @close="() => { fullScreenState.photo = {}; fullScreenState.active = false; }"
                     />
                 </div>

@@ -17,8 +17,12 @@ class AlbumController extends Controller
      */
     public function index()
     {
+        $total = Album::count();
+        $pageSize = 12;
+        $page = 1;
         return Inertia::render('Album/Index', [
-            "albums" => Album::orderBy("created_at", "DESC")->get()->jsonSerialize(),
+            "lastPage" => ceil($total / $pageSize),
+            "albums" => Album::orderBy("created_at", "DESC")->offset($page * $pageSize - $pageSize)->limit($pageSize)->get()->jsonSerialize(),
         ]);
     }
 
@@ -28,18 +32,56 @@ class AlbumController extends Controller
     public function show(string $id)
     {
         $album = Album::where("uuid", $id)->first();
+        $total = $album->photos()->count();
+        $pageSize = 12;
+        $page = 1;
         return Inertia::render('Album/Show', [
             "album" => $album->jsonSerialize(),
-            "photos" => $album->photos->jsonSerialize()
+            "lastPage" => ceil($total / $pageSize),
+            "photos" => $album->photos()->orderBy("album_photo.created_at", "DESC")->offset($page * $pageSize - $pageSize)->limit($pageSize)->get()->jsonSerialize()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function pages(Request $request)
     {
-        //
+        $total = Album::count();
+        $pageSize = 12;
+        $page = $request->page ?? 2;
+        $page = $request->page <= ceil($total / $pageSize) ? $page : ceil($total / $pageSize);
+        return response()->json([
+            "lastPage" => ceil($total / $pageSize),
+            "albums" => Album::orderBy("created_at", "DESC")->offset($page * $pageSize - $pageSize)->limit($pageSize)->get()->jsonSerialize(),
+        ]);
+    }
+
+    public function photoUuids(Request $request)
+    {
+        $album = Album::where("uuid", $request->id)->first();
+        $uuids = [];
+        foreach($album->photos as $photo) array_push($uuids, $photo->uuid);
+        return response()->json([
+            "uuids" => $uuids,
+        ]);
+    }
+
+    public function photoPages(Request $request)
+    {
+        $album = Album::where("uuid", $request->id)->first();
+        $total = $album->photos()->count();
+        $pageSize = 12;
+        $page = $request->page ?? 2;
+        $page = $request->page <= ceil($total / $pageSize) ? $page : ceil($total / $pageSize);
+        return response()->json([
+            "lastPage" => ceil($total / $pageSize),
+            "photos" => $album->photos()->orderBy("album_photo.created_at", "DESC")->offset($page * $pageSize - $pageSize)->limit($pageSize)->get()->jsonSerialize(),
+        ]);
+    }
+
+    public function photoRemove(Request $request)
+    {
+        $album = Album::where("uuid", $request->id)->first();
+        $total = $album->photos()->detach(Photo::where("uuid", $request->photoId)->first());
+        return redirect(route("album.show", [ "id" => $album->uuid ]))->with(["message" => "Photo supprimée avec success"]);
     }
 
     /**
@@ -67,21 +109,15 @@ class AlbumController extends Controller
         return redirect(route("album.index"))->with(["message" => "Photo ajouté avec success"]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function addPhoto(Request $request)
+    public function addPhotos(Request $request)
     {
         $album = Album::where("uuid", $request->id)->first();
-        $photo = Photo::where("uuid", $request->uuid)->first();
-        if(!$photo) redirect()->back()->withErrors(["uuid" => "Photo introuvable" ]);
         if(!$album) redirect()->back()->withErrors(["uuid" => "Album introuvable" ]);
-        $album->photos()->attach($photo);
+        foreach($request->uuids as $uuid) {
+            $photo = Photo::where("uuid", $uuid)->first();
+            if(!$photo) redirect()->back()->withErrors(["uuid" => "Photo introuvable" ]);
+            $album->photos()->attach($photo);
+        }
         return redirect()->back();
     }
 

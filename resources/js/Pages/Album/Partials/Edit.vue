@@ -3,7 +3,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({
-    photo: {
+    album: {
         type: Object,
         required: true,
     }

@@ -1,6 +1,5 @@
 <script setup>
 import Layout from '@/Layouts/Layout.vue';
-import DeleteUserForm from './Partials/DeleteUserForm.vue';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
 import { Head } from '@inertiajs/vue3';
@@ -41,12 +40,6 @@ defineProps({
                             class="bg-gray-50 p-4 shadow sm:rounded-lg sm:p-8"
                         >
                             <UpdatePasswordForm class="pr-64" />
-                        </div>
-
-                        <div
-                            class="bg-gray-50 p-4 shadow sm:rounded-lg sm:p-8"
-                        >
-                            <DeleteUserForm class="pr-64" />
                         </div>
                     </div>
                 </div>

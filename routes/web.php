@@ -19,15 +19,20 @@ Route::get('/info', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/photos', [PhotoController::class, 'index'])->name('photo.index');
+    Route::get('/photos/page/{page}', [PhotoController::class, 'pages'])->name('photo.page');
     Route::post('/photo', [PhotoController::class, 'store'])->name('photo.store');
     Route::post('/photo/{id}', [PhotoController::class, 'update'])->name('photo.update');
     Route::delete('/photo/{id}', [PhotoController::class, 'destroy'])->name('photo.destroy');
     
     Route::get('/albums', [AlbumController::class, 'index'])->name('album.index');
+    Route::get('/albums/page/{page}', [AlbumController::class, 'pages'])->name('album.page');
     Route::get('/album/{id}', [AlbumController::class, 'show'])->name('album.show');
+    Route::get('/album/{id}/photos', [AlbumController::class, 'photoUuids'])->name('album.photo.uuid');
+    Route::get('/album/{id}/page/{page}', [AlbumController::class, 'photoPages'])->name('album.photo.page');
+    Route::delete('/album/{id}/{photoId}', [AlbumController::class, 'photoRemove'])->name('album.photo.remove');
     Route::post('/album', [AlbumController::class, 'store'])->name('album.store');
     Route::post('/album/{id}', [AlbumController::class, 'update'])->name('album.update');
-    Route::post('/album/{id}/add', [AlbumController::class, 'addPhoto'])->name('album.add');
+    Route::post('/album/{id}/add', [AlbumController::class, 'addPhotos'])->name('album.add');
     Route::delete('/album/{id}', [AlbumController::class, 'destroy'])->name('album.destroy');
 
     Route::get('/admin/users', [UserController::class, 'index'])->name("admin.user.index");
@@ -44,7 +49,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
