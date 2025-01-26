@@ -59,9 +59,9 @@ const emits = defineEmits(["full-screen", "delete-photo"]);
         </div>
         <div class="hidden absolute left-0 right-0 bottom-0 p-2 group-hover:flex justify-between flex-wrap items-end">
             <a :href="props.photo.path" target="_blank" class="bg-black/50 p-1 rounded-md mt-1 h-fit"><img src="/icons/download.png" class="h-6 invert"></a>
-            <div class="text-right bg-black/30 p-1 px-3 rounded-md mt-1">
-                <p class="text-sm text-white">{{ props.photo.name }}</p>
-                <p class="text-sm text-white">publier par {{ props.photo.user.name }}</p>
+            <div class="text-right bg-black/30 p-1 laptop:px-3 px-1 rounded-md mt-1">
+                <p class="laptop:text-sm text-xs text-white">{{ props.photo.name }}</p>
+                <p class="laptop:text-sm text-xs text-white">publier par {{ props.photo.user.name }}</p>
             </div>
         </div>
         <img :src="props.photo.path" class="w-full bg-white">

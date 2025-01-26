@@ -36,7 +36,7 @@ const gridState = reactive({ columns: 3 });
         <template #header>
             <div class="w-full flex justify-between items-center py-1">
                 <div class="relative flex items-center">
-                    <p class="font-semibold mr-4">Affichage</p>
+                    <p class="font-semibold laptop:mr-4 ml-1 laptop:text-lg text-sm">Affichage</p>
                     <div class="flex items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
                         <button @click="squareView" :class="{'bg-black/5': viewState.square}" class="flex items-center h-full border-r border-gray-400 p-1
                         hover:bg-black/5">
@@ -50,8 +50,8 @@ const gridState = reactive({ columns: 3 });
                 </div>
                 <div class="relative flex items-center">
                     
-                    <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
-                        <p class="font-medium mr-4">Ajouter un album</p>
+                    <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md px-1 py-1">
+                        <p class="font-medium laptop:mr-4 mr-1 laptop:text-lg text-sm">Ajouter un album</p>
                         <img src="/icons/add.svg" class="h-8">
                     </button>
                     <Create @close="create.active = !create.active" v-if="create.active" class="absolute -right-0 top-[110%] z-10 mt-4" />

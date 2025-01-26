@@ -18,17 +18,17 @@ const props = defineProps({
     <Layout>
         <template #header>
             <div class="w-full flex justify-between items-center py-1">
-                <button class="bg-gray-300 p-2 py-1 rounded shadow text-gray-800">Utilisateurs</button>
-                <Link :href="route('admin.user.create')" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
-                        <p class="font-medium mr-4">Ajouter un utilisateur</p>
+                <button class="bg-gray-300 p-2 py-1 rounded shadow text-gray-800 ml-1 laptop:text-lg text-sm">Utilisateurs</button>
+                <Link :href="route('admin.user.create')" class="flex items-center hover:bg-black/10 rounded-md px-1 py-1">
+                        <p class="font-medium laptop:mr-4 mr-1 laptop:text-lg text-sm">Ajouter un utilisateur</p>
                         <img src="/icons/add.svg" class="h-8">
                 </Link>
             </div>
         </template>
         <template #content>
-            <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] px-2  h-screen">
-                <div class="w-full flex flex-col mt-10">
-                    <div class="w-full grid grid-cols-6 p-4 border-b boder text-center text-lg font-medium">
+            <div class="laptop:w-full desktop:px-[17.5%] laptop:px-[12.5%]  overflow-x-auto px-2  h-screen">
+                <div class="tablet:w-full flex flex-col mt-10 w-[800px]">
+                    <div class="w-full grid grid-cols-6 p-4 border-b boder text-center laptop:text-lg text-sm font-medium">
                         <p>Nom</p>
                         <p>Totem</p>
                         <p>Email</p>
@@ -36,7 +36,7 @@ const props = defineProps({
                         <p>Contactable</p>
                         <p>Créer le</p>
                     </div>
-                    <div v-for="(user, index) in users" class="w-full grid grid-cols-6 p-4 border-b boder text-center">
+                    <div v-for="(user, index) in users" class="w-full grid grid-cols-6 p-4 border-b laptop:text-md text-xs boder text-center">
                         <p>{{ user.name }}</p>
                         <p>{{ user.totem }}</p>
                         <p>{{ user.email }}</p>

@@ -64,8 +64,8 @@ const deletePhoto = async () => {
             </div>
         </div>
         <div class="absolute left-0 right-0 bottom-0 p-2 flex justify-between flex-wrap items-end">
-            <p class="text-sm text-white bg-black/30 p-1 px-3 rounded">{{ props.album.name }}</p>
-            <p class="text-sm text-white bg-black/30 p-1 px-3 rounded">publier par {{ props.album.user.name }}</p>
+            <p class="laptop:text-sm text-xs text-white bg-black/30 p-1 px-3 rounded">{{ props.album.name }}</p>
+            <p class="laptop:text-sm text-xs text-white bg-black/30 p-1 px-3 rounded">publier par {{ props.album.user.name }}</p>
         </div>
         <img :src="props.album.image" class="w-full bg-white">
     </Link>
