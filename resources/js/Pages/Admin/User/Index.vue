@@ -26,7 +26,7 @@ const props = defineProps({
             </div>
         </template>
         <template #content>
-            <div class="w-full px-[17.5%] h-screen">
+            <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] px-2  h-screen">
                 <div class="w-full flex flex-col mt-10">
                     <div class="w-full grid grid-cols-6 p-4 border-b boder text-center text-lg font-medium">
                         <p>Nom</p>

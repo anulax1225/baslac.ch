@@ -102,7 +102,7 @@ const deletePhoto = (uuid) => {
             </div>
         </template>
         <template #content>
-            <div class="w-full px-[17.5%] h-full">
+            <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] h-full">
                 <div class="w-full h-full pb-20 bg-black/5">
                     <div v-if="!fullScreenState.active" :class="{'grid-cols-3':  gridState.columns === 3}" 
                     class="w-full grid pt-10">

@@ -64,12 +64,12 @@ const closeOnEscape = (e) => {
             <img src="/icons/cancel.svg" class="h-8 invert pointer-events-none">
         </button>
     </div>
-    <div class="w-full h-[600px] flex items-center justify-between">
+    <div class="laptop:w-full h-[600px] flex items-center justify-between">
         <button @click="previousPhoto" class="pr-3 hover:scale-105">
             <img src="/icons/next.svg" class="h-16 rotate-180">
         </button>
-        <div class="relative h-full">
-            <img :src="photo.path" class="h-full">
+        <div class="relative h-full laptop:w-full w-[300px] flex items-center justify-center">
+            <img :src="photo.path" class="laptop:h-full">
         </div>
         <button @click="nextPhoto" class="pl-3 hover:scale-105">
             <img src="/icons/next.svg" class="h-16">

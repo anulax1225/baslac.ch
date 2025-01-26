@@ -11,6 +11,17 @@ export default {
     ],
 
     theme: {
+        screens: {
+            'tablet': '740px',
+            // => @media (min-width: 640px) { ... }
+      
+            'laptop': '1150px',
+            // => @media (min-width: 1024px) { ... }
+      
+            'desktop': '1450px',
+            // => @media (min-width: 1280px) { ... }
+          },
+    
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],

@@ -36,7 +36,7 @@ const submit = () => {
             </div>
         </template>
         <template #content>
-            <div class="w-full px-[17.5%] h-screen">
+            <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] px-2  h-screen">
                 <div class="w-full bg-white shadow rounded-lg px-8 py-8 mt-10">
                     <form @submit.prevent="submit" class="max-w-2xl">
                         <div class="">

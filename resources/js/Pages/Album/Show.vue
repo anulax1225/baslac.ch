@@ -33,6 +33,7 @@ const fullScreen = (photo) => {
     fullScreenState.active = true;
     photoState.square = false; 
     photoState.list = false;
+    toggle();
 }
 
 const gridState = reactive({ columns: 3 });
@@ -42,6 +43,7 @@ const squareView = () => {
     fullScreenState.active = false;
     photoState.square = true; 
     photoState.list = false;
+    toggle();
 }
 
 const listView = () => {
@@ -49,6 +51,7 @@ const listView = () => {
     fullScreenState.active = false;
     photoState.square = false; 
     photoState.list = true;
+    toggle();
 }
 
 const addPhotos = (uuids) => {
@@ -84,6 +87,11 @@ const deletePhoto = (uuid) => {
         });
     }
 }
+
+const toggle = () => {
+    document.querySelector('#affichage').classList.toggle('hidden');
+    document.querySelector('#affichage').classList.toggle('flex');
+}
 </script>
 
 <template>
@@ -92,13 +100,15 @@ const deletePhoto = (uuid) => {
         <template #header>
             <div class="w-full flex justify-between items-center py-1">
                 <div class="relative flex items-center">
-                    <p class="font-semibold mr-4">Affichage</p>
-                    <div class="flex items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
-                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full border-r border-gray-400 p-1
+                    <p class="font-semibold laptop:mr-4 mr-1 laptop:text-lg text-sm hidden laptop:block">Affichage</p>
+                    <p @click="toggle"
+                    class="font-semibold laptop:mr-4 mr-1 laptop:text-lg text-sm laptop:hidden">Affichage</p>
+                    <div id="affichage" class="absolute laptop:static hidden top-full mt-1 laptop:flex laptop:flex-row flex-col items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
+                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full laptop:border-r laptop:border-b-0 border-b border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/block-content.svg" class="h-7">
                         </button>
-                        <button @click="listView" :class="{'bg-black/5': photoState.list}" class="flex items-center h-full border-r border-gray-400 p-1
+                        <button @click="listView" :class="{'bg-black/5': photoState.list}" class="flex items-center h-full laptop:border-r laptop:border-b-0  border-b border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/list.svg" class="h-7">
                         </button>
@@ -111,24 +121,24 @@ const deletePhoto = (uuid) => {
                 <div class="relative flex items-center">
                     
                     <button @click="create.active = !create.active" class="flex items-center hover:bg-black/10 rounded-md px-2 py-1">
-                        <p class="font-medium mr-4">Ajouter une photo</p>
+                        <p class="font-medium laptop:mr-4 mr-1 laptop:text-lg text-sm">Ajouter une photo</p>
                         <img src="/icons/add.svg" class="h-8">
                     </button>
                     <Panel @data="(uuids) => addPhotos(uuids)" @close="create.active = !create.active" v-if="create.active" :album="props.album"
-                    class="absolute -right-0 top-[110%] z-10 mt-4" />
+                    class="absolute laptop:-right-0 top-[110%] z-10 mt-4" />
                 </div>
             </div>
         </template>
         <template #content>
-            <div class="w-full px-[17.5%] h-full">
-                <div v-if="!fullScreenState.active" class="w-full h-96 flex items-stretch justify-stretch overflow-hidden">
+            <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] h-full">
+                <div v-if="!fullScreenState.active" class="w-full laptop:h-96 flex laptop:flex-row flex-col items-stretch justify-stretch overflow-hidden">
                     <img :src="album.image">
-                    <div class="w-full h-full px-10 py-6">
+                    <div class="w-full h-full laptop:px-10 px-3 py-6">
                         <p class="text-7xl font-extrabold text-black/90">{{ album.name }}</p>
                         <p class="pt-1 pl-2 text-2xl font-extrabold text-black/90">publiée le {{ album.created_at }}</p>
                     </div>
                 </div>
-                <div class="w-full h-full pb-20 px-1 bg-black/5">
+                <div class="w-full h-full pb-20 bg-black/5">
                     <div v-if="!fullScreenState.active" :class="{'grid-cols-3':  gridState.columns === 3}" 
                     class="w-full grid pt-10">
                         <Show v-for="(photo, index) in photoState.photos" 

@@ -12,7 +12,7 @@ import Layout from '@/Layouts/Layout.vue';
                 <img src="/img/sarasin.png" class="w-full pb-96">
                 <p class="text-center absolute text-white/65 text-[180px] leading-[180px] font-bold left-0 right-0">Scout Baslac</p>
             </div>
-            <div class="w-full px-[17.5%] flex flex-col">
+            <div class="w-full desktop:px-[17.5%] laptop:px-[12.5%] px-2  flex flex-col">
                 <div class="my-5">
                     <p class="w-full text-5xl border-b border-gray-300 pb-2 mb-2 font-semibold">Qui sommes-nous?</p>
                     <p class="mb-2">

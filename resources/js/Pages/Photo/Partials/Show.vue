@@ -39,7 +39,7 @@ const emits = defineEmits(["full-screen", "delete-photo"]);
     <div :class="{ 
         'border-r': (props.index + 1) % props.columns  != 0, 
         'border-b': props.index < props.length - props.columns, 
-        'h-96': props.columns === 3,
+        'laptop:h-96 h-44': props.columns === 3,
         'h-[25rem]': props.columns !== 3, 
     }" 
     class="group relative w-full overflow-hidden border-white hover:scale-[1.003] flex items-center bg-black/90">
