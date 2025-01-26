@@ -47,8 +47,8 @@ const submit = () => {
 </script>
 
 <template>
-    <div class="text-left text-black laptop:w-[30rem] w-screen shadow-xl rounded-lg bg-gray-50 overflow-hidden
-    border border-gray-300">
+    <div class="text-left text-black laptop:w-[30rem] w-screen shadow-xl rounded-lg bg-gray-50 overflow-y-auto
+    border border-gray-300 max-h-[calc(100vh/2)]">
         <div v-if="imageState.url" class="max-h-72 overflow-hidden flex items-center">
             <img  :src="imageState.url">
         </div>
