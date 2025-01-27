@@ -8,6 +8,7 @@ use App\Utils\Mail;
 use App\Utils\Token;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -36,6 +37,7 @@ class PasswordResetLinkController extends Controller
             "email" => "required|string|email|max:255"
         ]);
         $user = User::where("email", $request->email)->firstOrFail();
+        DB::table("password_reset_tokens")->where("email", $user->email)->delete();
         $token = Token::create($user->email);
         Mail::send((object)[
             "user" => $user,
