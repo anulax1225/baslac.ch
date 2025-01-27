@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::table("users")->where("path", "profiles/none.svg")->update([
+        DB::table("users")->where("path", "profiles/none.png")->update([
             "path" => "profiles/none.webp"
         ]);
     }

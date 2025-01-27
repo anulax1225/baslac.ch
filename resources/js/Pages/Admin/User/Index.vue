@@ -61,7 +61,7 @@ const resetPassword = (id, email) => {
                     </div>
                     <div v-for="(user, index) in users" class="w-full grid p-2 border-b laptop:text-md text-sm boder text-center items-center"
                     style="grid-template-columns: repeat(15, minmax(0, 1fr));">
-                        <div class="desktop:w-14 desktop:h-14 laptop:w-12 laptop:h-12 w-10 h-10 rounded-full overflow-hidden col-span-1 flex items-center bg-black">
+                        <div class="desktop:w-14 desktop:h-14 laptop:w-12 laptop:h-12 w-10 h-10 rounded-full overflow-hidden col-span-1 flex items-center justify-center bg-black">
                             <img :src="user.pic" :class="{ 'desktop:h-14 laptop:h-12 h-10': user.path !== 'profiles/none.webp'}">
                         </div>
                         <p class="col-span-2">{{ user.name }}</p>
