@@ -5,12 +5,32 @@ import Create from '@/Pages/Photo/Partials/Create.vue';
 import Show from'@/Pages/Photo/Partials/Show.vue';
 import Modal from '@/Pages/Photo/Partials/Modal.vue';
 import { reactive, ref } from 'vue';
+import axios from 'axios';
 
 const props = defineProps({
     users: {
         type: Array,
     }
 });   
+
+let ids = []
+
+
+
+const resetPassword = (id, email) => {
+    if(!ids.includes(id)) {
+        ids.push(id);
+        axios.post(route('password.email') + "?email=" + email);
+        document.querySelector("#reset-" + id).classList.remove("bg-primary");
+        document.querySelector("#reset-" + id).classList.add("bg-gray-500");
+        setTimeout(() => {
+            ids = ids.filter(i => i != id);
+            document.querySelector("#reset-" + id).classList.add("bg-primary");
+            document.querySelector("#reset-" + id).classList.remove("bg-gray-500");
+        }, 5 * 1000);
+    }
+
+}
 </script>
 
 <template>
@@ -27,22 +47,30 @@ const props = defineProps({
         </template>
         <template #content>
             <div class="laptop:w-full desktop:px-[17.5%] laptop:px-[12.5%]  overflow-x-auto px-2  h-screen">
-                <div class="tablet:w-full flex flex-col mt-10 w-[800px]">
-                    <div class="w-full grid grid-cols-6 p-4 border-b boder text-center laptop:text-lg text-sm font-medium">
-                        <p>Nom</p>
-                        <p>Totem</p>
-                        <p>Email</p>
-                        <p>Tel.</p>
-                        <p>Contactable</p>
-                        <p>Créer le</p>
+                <div class="tablet:w-full flex flex-col mt-10 min-w-[850px]">
+                    <div class="w-full grid p-4 border-b boder text-center laptop:text-lg text-sm font-medium"
+                    style="grid-template-columns: repeat(15, minmax(0, 1fr));">
+                        <p class="col-span-1"></p>
+                        <p class="col-span-2">Nom</p>
+                        <p class="col-span-2">Totem</p>
+                        <p class="col-span-3">Email</p>
+                        <p class="col-span-2">Tel.</p>
+                        <p class="col-span-1">Contactable</p>
+                        <p class="col-span-2">Créer le</p>
+                        <p class="col-span-2">Mot de passe <p class="text-xs">(Renvoyer)</p></p>
                     </div>
-                    <div v-for="(user, index) in users" class="w-full grid grid-cols-6 p-4 border-b laptop:text-md text-xs boder text-center">
-                        <p>{{ user.name }}</p>
-                        <p>{{ user.totem }}</p>
-                        <p>{{ user.email }}</p>
-                        <p>{{ user.tel }}</p>
-                        <p>{{ user.contactable ? "Oui" : "Non" }}</p>
-                        <p>{{ user.created_at }}</p>
+                    <div v-for="(user, index) in users" class="w-full grid p-2 border-b laptop:text-md text-sm boder text-center items-center"
+                    style="grid-template-columns: repeat(15, minmax(0, 1fr));">
+                        <div class="w-10 rounded-full overflow-hidden col-span-1">
+                            <img :src="user.pic" class="h-10">
+                        </div>
+                        <p class="col-span-2">{{ user.name }}</p>
+                        <p class="col-span-2">{{ user.totem }}</p>
+                        <p class="col-span-3">{{ user.email }}</p>
+                        <p class="col-span-2">{{ user.tel }}</p>
+                        <p class="col-span-1">{{ user.contactable ? "Oui" : "Non" }}</p>
+                        <p class="col-span-2">{{ user.created_at }}</p>
+                        <button :id="'reset-' + user.id" @click="resetPassword(user.id, user.email)" class="col-span-2 mx-auto bg-primary rounded pb-1 px-1 shadow shadow-gray-300"><img src="/icons/mail.svg" class="h-7 invert"></button>
                     </div>
                 </div>
             </div>
