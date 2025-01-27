@@ -4,8 +4,9 @@ import Layout from '@/Layouts/Layout.vue';
 import Create from '@/Pages/Photo/Partials/Create.vue';
 import Show from'@/Pages/Photo/Partials/Show.vue';
 import Modal from '@/Pages/Photo/Partials/Modal.vue';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import Panel from '../Photo/Partials/Panel.vue';
+import Platform from '@/platform';
 
 const props = defineProps({
     album: {
@@ -92,6 +93,13 @@ const toggle = () => {
     document.querySelector('#affichage').classList.toggle('hidden');
     document.querySelector('#affichage').classList.toggle('flex');
 }
+
+onMounted(() => {
+    if(Platform.detect() == "mobile") {
+        listView(); 
+        toggle();
+    }
+});
 </script>
 
 <template>

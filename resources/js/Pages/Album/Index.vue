@@ -3,7 +3,8 @@ import { Head } from '@inertiajs/vue3';
 import Layout from '@/Layouts/Layout.vue';
 import Create from './Partials/Create.vue';
 import Show from'./Partials/Show.vue';
-import { reactive } from 'vue';
+import { onMounted, reactive } from 'vue';
+import Platform from '@/platform';
 
 const props = defineProps({
     albums: {
@@ -27,6 +28,11 @@ const listView = () => {
     viewState.list = true;
 }
 
+onMounted(() => {
+    if(Platform.detect() == "mobile") {
+        listView(); 
+    }
+});
 const gridState = reactive({ columns: 3 });
 </script>
 

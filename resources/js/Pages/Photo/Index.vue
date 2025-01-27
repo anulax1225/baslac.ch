@@ -5,7 +5,8 @@ import Dropzone from '@/Components/Dropzone.vue';
 import Create from './Partials/Create.vue';
 import Show from'./Partials/Show.vue';
 import Modal from './Partials/Modal.vue';
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
+import Platform from '@/platform';
 
 const props = defineProps({
     photos: {
@@ -30,6 +31,7 @@ const fullScreen = (photo) => {
     fullScreenState.active = true;
     photoState.square = false; 
     photoState.list = false;
+    toggle();
 }
 
 const gridState = reactive({ columns: 3 });
@@ -39,6 +41,7 @@ const squareView = () => {
     fullScreenState.active = false;
     photoState.square = true; 
     photoState.list = false;
+    toggle();
 }
 
 const listView = () => {
@@ -46,6 +49,7 @@ const listView = () => {
     fullScreenState.active = false;
     photoState.square = false; 
     photoState.list = true;
+    toggle();
 }
 
 const loadPhotos = async () => {
@@ -72,6 +76,13 @@ const toggle = () => {
     document.querySelector('#affichage').classList.toggle('hidden');
     document.querySelector('#affichage').classList.toggle('flex');
 }
+
+onMounted(() => {
+    if(Platform.detect() == "mobile") {
+        listView(); 
+        toggle();
+    }
+});
 </script>
 
 <template>
