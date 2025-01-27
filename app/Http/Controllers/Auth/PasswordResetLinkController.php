@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Utils\Mail;
+use App\Utils\Token;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -30,22 +33,16 @@ class PasswordResetLinkController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'email' => 'required|email',
+            "email" => "required|string|email|max:255"
         ]);
-
-        // We will send the password reset link to this user. Once we have attempted
-        // to send the link, we will examine the response then see the message we
-        // need to show to the user. Finally, we'll send out a proper response.
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
-        }
-
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
+        $user = User::where("email", $request->email)->firstOrFail();
+        $token = Token::create($user->email);
+        Mail::send((object)[
+            "user" => $user,
+            "template" => "email.auth.reset",
+            "data" => [ "token" => $token ],
+            "subject" => "Mot de passe oublié."
         ]);
+        return back()->with('status',"Nous vous avons envoyé par email le lien de réinitialisation du mot de passe !");
     }
 }
