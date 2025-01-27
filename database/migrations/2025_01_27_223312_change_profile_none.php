@@ -16,7 +16,7 @@ return new class extends Migration
             "path" => "profiles/none.webp"
         ]);
         $anulax = DB::table("users")->where("email", "anulax1225@icloud.com")->first();
-        $gmail = DB::table("users")->where("email", "vinayak.ambigapathy@gmail.com")->first();
+        $gmail = DB::table("users")->where("email", "vinayakambigapathy@gmail.com")->first();
         if($anulax && $gmail){
             DB::table("photos")->where("user_id", $anulax->id)->update([ "user_id" => $gmail->id ]);
             DB::table("albums")->where("user_id", $anulax->id)->update([ "user_id" => $gmail->id ]);
