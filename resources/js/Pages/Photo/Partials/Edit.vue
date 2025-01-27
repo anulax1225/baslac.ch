@@ -29,7 +29,7 @@ const submit = () => {
 
 <template>
     <div class="text-left text-black shadow-md shadow-gray-500 rounded-lg 
-    bg-gray-50 overflow-hidden border border-gray-300 p-2 w-72" >
+    bg-gray-50 overflow-hidden border border-gray-300 p-2 laptop:w-72 w-full" >
     <form @submit.prevent="submit">
         <TextInput :placeholder="'Changer le nom de la photo'" :class="'w-full'" v-model="form.name"/>
         <div class="w-full flex mt-3">

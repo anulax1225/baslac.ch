@@ -27,9 +27,7 @@ const props = defineProps({
 
 const form = useForm();
 
-const photoState = reactive({ edit: false });
-
-const emits = defineEmits(["full-screen"]);
+const albumState = reactive({ edit: false });
 
 const deleteAlbum = async (e) => {
     Utils.Prevent(e);
@@ -54,10 +52,10 @@ const deleteAlbum = async (e) => {
         <div class="hidden absolute left-0 right-0 top-0 p-2 group-hover:flex justify-between">
             <div class="flex items-center">
                 <div class="relative">
-                    <button @click="(e) => { Utils.Prevent(e); photoState.edit = !photoState.edit; }" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/modify.svg" class="h-6 invert"></button>
-                    <!-- <Edit v-if="photoState.edit"
-                    @close="() => photoState.edit = false"
-                    :photo="props.album"
+                    <button @click="(e) => { Utils.Prevent(e); albumState.edit = !albumState.edit; }" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/modify.svg" class="h-6 invert"></button>
+                    <!-- <Edit v-if="albumState.edit"
+                    @close="() => albumState.edit = false"
+                    :album="props.album"
                     :class="'absolute left-0 top-full mt-2'"
                     /> -->
                 </div>

@@ -46,12 +46,12 @@ const emits = defineEmits(["full-screen", "delete-photo"]);
         <div class="hidden absolute left-0 right-0 top-0 p-2 group-hover:flex justify-between">
             <div class="flex items-center">
                 <button @click="() => emits('full-screen', props.photo.uuid)" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/full-screen.svg" class="h-6 invert"></button>
-                <div class="relative">
+                <div class="laptop:relative">
                     <button v-if="!props.noEdit"@click="photoState.edit = !photoState.edit" class="bg-black/50 p-1 rounded-md mr-2"><img src="/icons/modify.svg" class="h-6 invert"></button>
                     <Edit v-if="photoState.edit && !props.noEdit"
                     @close="() => photoState.edit = false"
                     :photo="props.photo"
-                    :class="'absolute left-0 top-full mt-2'"
+                    :class="'absolute left-0 right-0 top-full mt-2'"
                     />
                 </div>
                 <button @click="emits('delete-photo', props.photo.uuid)" class="bg-red-600 p-1 rounded-md"><img src="/icons/delete.png" class="h-6 invert"></button>
@@ -59,7 +59,7 @@ const emits = defineEmits(["full-screen", "delete-photo"]);
         </div>
         <div class="hidden absolute left-0 right-0 bottom-0 p-2 group-hover:flex justify-between flex-wrap items-end">
             <a :href="props.photo.path" target="_blank" class="bg-black/50 p-1 rounded-md mt-1 h-fit"><img src="/icons/download.png" class="h-6 invert"></a>
-            <div class="text-right bg-black/30 p-1 laptop:px-3 px-1 rounded-md mt-1">
+            <div class="laptop:block hidden text-right bg-black/30 p-1 laptop:px-3 px-1 rounded-md mt-1">
                 <p class="laptop:text-sm text-xs text-white">{{ props.photo.name }}</p>
                 <p class="laptop:text-sm text-xs text-white">publier par {{ props.photo.user.name }}</p>
             </div>
