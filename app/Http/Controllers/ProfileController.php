@@ -41,7 +41,7 @@ class ProfileController extends Controller
             "totem" => $request->totem ?? "",
             "tel" => $request->tel ?? "",
             "contactable" => intval($request->contactable),
-            "path" => $file ?? "profiles/none.svg",
+            "path" => $file ?? "profiles/none.webp",
         ]);
 
         return redirect(route('profile.edit'));
