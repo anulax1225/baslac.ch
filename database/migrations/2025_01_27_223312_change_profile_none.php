@@ -20,6 +20,7 @@ return new class extends Migration
         if($anulax && $gmail){
             DB::table("photos")->where("user_id", $anulax->id)->update([ "user_id" => $gmail->id ]);
             DB::table("albums")->where("user_id", $anulax->id)->update([ "user_id" => $gmail->id ]);
+            DB::table("users")->where("id", $anulax->id)->delete();
         }
     }
 
