@@ -130,19 +130,21 @@ const toggleMenu = () => {
         <p class="italic text-gray-600 laptop:text-lg text-xs">&copy; 2024 Propriété de l'association Scout Bas-Lac</p>
         <div class="flex my-8">
             <div class="group laptop:mx-2 mx-1">
-                <div class="group-hover:social-icon-in social-icon-out p-2 border border-gray-600 rounded-lg">
-                    <img src="/icons/facebook.svg" class="w-[2rem] group-hover:icon-in icon-out dark:invert">
-                </div>
+                <a target="_blank" href="https://www.facebook.com/people/Groupe-Scout-Baslac/61571687535396/">
+                    <div class="group-hover:social-icon-in social-icon-out p-2 border border-gray-600 rounded-lg">
+                        <img src="/icons/facebook.svg" class="w-[2rem] group-hover:icon-in icon-out dark:invert">
+                    </div>
+                </a>
             </div>
             <div class="group laptop:mx-2 mx-1">
-                <a target="_blank" href="https://www.instagram.com/scouts_baslac/">
+                <a target="_blank" href="https://www.instagram.com/groupe_scouts_baslac/?igsh=MWx1OXE0aWcyZzZubA%3D%3D">
                     <div class="group group-hover:social-icon-in social-icon-out p-2 border border-gray-600 rounded-lg">
                         <img src="/icons/instagram.svg" class="w-[2rem] group-hover:icon-in icon-out dark:invert">
                     </div> 
                 </a>
             </div>
             <div class="group laptop:mx-2 mx-1">
-                <a target="_blank" href="mailto:groupe-baslac@gmail.com">
+                <a target="_blank" href="mailto:groupebaslac@gmail.com">
                     <div class="group group-hover:social-icon-in social-icon-out p-2 border border-gray-600 rounded-lg">
                         <img src="/icons/mail.svg" class="w-[2rem] group-hover:icon-in icon-out dark:invert">
                     </div>
