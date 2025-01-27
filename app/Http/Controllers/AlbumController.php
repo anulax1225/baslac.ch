@@ -126,6 +126,11 @@ class AlbumController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $album = Album::where("uuid", $id)->first();
+        if(!$album) redirect()->back()->withErrors(["uuid" => "Album introuvable" ]);
+        $album->photos()->detach();
+        Storage::disk("s3")->delete($album->path);
+        $album->delete();
+        return redirect(route("album.index"))->with(["message" => "Album supprimée avec success"]);
     }
 }

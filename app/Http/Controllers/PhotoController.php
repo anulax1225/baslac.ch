@@ -132,6 +132,7 @@ class PhotoController extends Controller
         $photo = Photo::where("uuid", $id)->first();
         if(!$photo) redirect()->back()->withErrors(["uuid" => "Photo introuvable" ]);
         $photo->albums()->detach();
+        Storage::disk("s3")->delete($photo->path);
         $photo->delete();
         return redirect(route("photo.index"))->with(["message" => "Photo supprimée avec success"]);
     }

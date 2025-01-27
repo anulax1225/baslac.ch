@@ -31,9 +31,10 @@ const photoState = reactive({ edit: false });
 
 const emits = defineEmits(["full-screen"]);
 
-const deletePhoto = async () => {
-    if(confirm("Voulez-vous vraiment supprimé cette photo")){
-        form.delete("/photo/" + props.album.uuid, {
+const deleteAlbum = async (e) => {
+    Utils.Prevent(e);
+    if(confirm("Voulez-vous vraiment supprimé cette album")){
+        form.delete(route("album.destroy", props.album.uuid), {
             headers: {
                 "X-CSRF-Token": document.querySelector('input[name=_token]').value,
             }
