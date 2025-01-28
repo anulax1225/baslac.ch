@@ -42,8 +42,7 @@ const gridState = reactive({ columns: 3 });
         <template #header>
             <div class="w-full flex justify-between items-center py-1">
                 <div class="relative flex items-center">
-                    <p class="font-semibold laptop:mr-4 ml-1 laptop:text-lg text-sm">Affichage</p>
-                    <div class="flex items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
+                    <div class="flex items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden mx-2">
                         <button @click="squareView" :class="{'bg-black/5': viewState.square}" class="flex items-center h-full border-r border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/block-content.svg" class="h-7">

@@ -91,15 +91,12 @@ onMounted(() => {
         <template #header>
             <div class="w-full flex justify-between items-center py-1">
                 <div class="relative flex items-center">
-                    <p class="font-semibold laptop:mr-4 mr-1 laptop:text-lg text-sm hidden laptop:block">Affichage</p>
-                    <p @click="toggle"
-                    class="font-semibold laptop:mr-4 mr-1 laptop:text-lg text-sm laptop:hidden">Affichage</p>
-                    <div id="affichage" class="absolute laptop:static hidden top-full mt-1 laptop:flex laptop:flex-row flex-col items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden">
-                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full laptop:border-r laptop:border-b-0  border-b border-gray-400 p-1
+                    <div id="affichage" class="static flex items-center bg-white rounded-md shadow-sm shadow-gray-300 overflow-hidden mx-2">
+                        <button @click="squareView" :class="{'bg-black/5': photoState.square}" class="flex items-center h-full border-r border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/block-content.svg" class="h-7">
                         </button>
-                        <button @click="listView" :class="{'bg-black/5': photoState.list}" class="flex items-center h-full laptop:border-r laptop:border-b-0  border-b border-gray-400 p-1
+                        <button @click="listView" :class="{'bg-black/5': photoState.list}" class="flex items-center h-full border-r border-gray-400 p-1
                         hover:bg-black/5">
                             <img src="/icons/list.svg" class="h-7">
                         </button>
