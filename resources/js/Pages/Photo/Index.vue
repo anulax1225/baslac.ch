@@ -22,16 +22,17 @@ const create = reactive({ active: false });
 
 const form = useForm();
 
-const fullScreenState = reactive({ photo: {}, active: false });
+const fullScreenState = reactive({ photo: {}, active: false, prev: { square: true, list: false, } });
 const photoState = reactive({ square: true, list: false, pageCount: 1, photos: props.photos });
 
 
 const fullScreen = (photo) => {
     fullScreenState.photo = photo;
     fullScreenState.active = true;
+    fullScreenState.prev.square = photoState.square;
+    fullScreenState.prev.list = photoState.list;
     photoState.square = false; 
     photoState.list = false;
-    toggle();
 }
 
 const gridState = reactive({ columns: 3 });
@@ -41,7 +42,6 @@ const squareView = () => {
     fullScreenState.active = false;
     photoState.square = true; 
     photoState.list = false;
-    toggle();
 }
 
 const listView = () => {
@@ -49,7 +49,13 @@ const listView = () => {
     fullScreenState.active = false;
     photoState.square = false; 
     photoState.list = true;
-    toggle();
+}
+
+const backView = () => { 
+    fullScreenState.photo = {}; 
+    fullScreenState.active = false; 
+    photoState.square = fullScreenState.prev.square;
+    photoState.list = fullScreenState.prev.list;
 }
 
 const loadPhotos = async () => {
@@ -72,15 +78,9 @@ const deletePhoto = (uuid) => {
     }
 }
 
-const toggle = () => {
-    document.querySelector('#affichage').classList.toggle('hidden');
-    document.querySelector('#affichage').classList.toggle('flex');
-}
-
 onMounted(() => {
     if(Platform.detect() == "mobile") {
         listView(); 
-        toggle();
     }
 });
 </script>
@@ -132,7 +132,7 @@ onMounted(() => {
                         class="bg-gray-100 p-2 font-medium text-gray-700 rounded shadow hover:scale-[1.01]">Afficher plus de photos</button>
                     </div>
                     <Modal v-if="fullScreenState.active" :photoId="fullScreenState.photo" :photos="photoState.photos"
-                    @close="() => { fullScreenState.photo = {}; fullScreenState.active = false; }"
+                    @close="backView()"
                     />
                 </div>
                 
